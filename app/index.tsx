@@ -29,51 +29,47 @@ export default function Index() {
             Test games early and give critical feedback to speed up getting out games.
           </Text>
           <Text style={{ color: 'white', textAlign: 'center', marginTop: 6 }}>
-            Pay £1 one time (subject to change) and get access to a treasure trove of new games, all before they launch here!
+            Pay £1 one time (subject to change) and get access to a treasure trove of new games, all before they launch here! Coming Soon.
           </Text>
-          <TouchableOpacity style={styles.ctaButton} onPress={() => Linking.openURL('https://sparkly.sparxlearning.cloud-ip.cc')}>
-            <Text style={styles.ctaButtonText}>Gaming for More.</Text>
-          </TouchableOpacity>
+          {/*
+            <TouchableOpacity style={styles.ctaButton} onPress={() => Linking.openURL('https://sparkly.sparxlearning.cloud-ip.cc')}>
+              <Text style={styles.ctaButtonText}>Gaming for More.</Text>
+            </TouchableOpacity>
+          */}
         </View>
         <View style={styles.gameList}>
           <Game name="BitLife" imageSource="6" onPress={() => gameGo('bitlife')} decor={decal} />
           <Game name="BTD 5" imageSource="m" onPress={() => gameGo('btd')} decor={decal} />
           <Game name="CCL" imageSource="n" onPress={() => gameGo('ccl')} decor={decal} />
-          <Game name="Crashy Road" imageSource="12" onPress={() => gameGo('crashy road')} decor={decal} newUntil={25120115} />
+          <Game name="Crashy Road" imageSource="j" onPress={() => gameGo('crashy road')} decor={decal} newUntil={25120115} />
           <Game name="Darts Pro" imageSource="f" onPress={() => gameGo('darts')} decor={decal} />
           <Game name="Draw Climber" imageSource="g" onPress={() => gameGo('draw climb')} decor={decal} newUntil={25110615} />
-          <Game name="Drift Boss" imageSource="w" onPress={() => gameGo('drift boss')} decor={decal} newUntil={25110615} />
+          <Game name="Drift Boss" imageSource="u" onPress={() => gameGo('drift boss')} decor={decal} newUntil={25110615} />
           <Game name="Drive Mad" imageSource="9" onPress={() => gameGo('drive mad')} decor={decal} />
           <Game name="DDC" imageSource="4" onPress={() => gameGo('duck clicker')} decor={decal} />
           <Game name="Fast Runner" imageSource="t" onPress={() => gameGo('fast runner')} decor={decal} newUntil={25110615} />
-          <Game name="FB + WG: Temple" imageSource="s" onPress={() => gameGo('fireboy and watergirl')} decor={decal} newUntil={25120115} pcOnly />
           <Game name="Flappy Bird" imageSource="h" onPress={() => gameGo('flappy bird')} decor={decal} newUntil={25110615} />
-          <Game name="G-Dash 3D" imageSource="z" onPress={() => gameGo('gd3d')} decor={decal} newUntil={25110615} />
-          <Game name="Gobble" imageSource="u" onPress={() => gameGo('gobble')} decor={decal} newUntil={25111015} />
+          <Game name="G-Dash 3D" imageSource="o" onPress={() => gameGo('gd3d')} decor={decal} newUntil={25110615} />
+          <Game name="Gobble" imageSource="r" onPress={() => gameGo('gobble')} decor={decal} newUntil={25111015} />
           <Game name="GunSpin" imageSource="8" onPress={() => gameGo('gunspin')} decor={decal} />
           <Game name="Idle Football" imageSource="k" onPress={() => gameGo('idle foot')} decor={decal} />
-          <Game name="Nut Sort" imageSource="340" onPress={() => gameGo('nut sort')} decor={decal} newUntil={25120115} broken />
           <Game name="OvO" imageSource="7" onPress={() => gameGo('ovo')} decor={decal} />
           <Game name="Penalty Kick" imageSource="e" onPress={() => gameGo('pens')} decor={decal} />
           <Game name="PvZ" imageSource="p" onPress={() => gameGo('pvz')} decor={decal} newUntil={25110615} />
           <Game name="Ragdoll Archer" imageSource="2" onPress={() => gameGo('ragdoll archers')} decor={decal} />
           <Game name="Ragdoll Hit" imageSource="c" onPress={() => gameGo('ragdoll hit')} decor={decal} newUntil={25110615} />
-          <Game name="Roll" imageSource="y" onPress={() => gameGo('roll')} decor={decal} newUntil={25110615} />
+          <Game name="Roll" imageSource="w" onPress={() => gameGo('roll')} decor={decal} newUntil={25110615} />
           <Game name="Roper (⚠︎)" imageSource="b" onPress={() => gameGo('roper')} decor={decal} />
-          <Game name="Run 3" imageSource="o" onPress={() => gameGo('run3')} decor={decal} pcOnly />
           <Game name="Slice Master" imageSource="q" onPress={() => gameGo('slice master')} decor={decal} newUntil={25112015} />
-          <Game name="Snowball.io" imageSource="67" onPress={() => gameGo('snowball io')} decor={decal} newUntil={25120115} />
           <Game name="Spiral Roll" imageSource="i" onPress={() => gameGo('spiral roll')} decor={decal} newUntil={25110615} />
-          <Game name="Stack" imageSource="x" onPress={() => gameGo('stack')} decor={decal} newUntil={25120615} />
+          <Game name="Stack" imageSource="v" onPress={() => gameGo('stack')} decor={decal} newUntil={25120615} />
           <Game name="Subway Surfers" imageSource="3" onPress={() => gameGo('subway surfers')} decor={decal} />
           <Game name="Survival Race" imageSource="d" onPress={() => gameGo('survival race')} decor={decal} />
-          <Game name="Swoop!" imageSource="r" onPress={() => gameGo('swoop')} decor={decal} newUntil={25110615} />
-          <Game name="Tap Goal" imageSource="v" onPress={() => gameGo('tap goal')} decor={decal} newUntil={25110615} />
-          <Game name="Thief Puzzle" imageSource="30" onPress={() => gameGo('tpo')} decor={decal} newUntil={25120115} />
+          <Game name="Tap Goal" imageSource="s" onPress={() => gameGo('tap goal')} decor={decal} newUntil={25110615} />
           <Game name="TABS" imageSource="5" onPress={() => gameGo('tabs')} decor={decal} />
           <Game name="Tiny Fishing" imageSource="1" onPress={() => gameGo('tiny fishing')} decor={decal} />
-          <Game name="Wheelie Bike" imageSource="25" onPress={() => gameGo('wheelie bike')} decor={decal} newUntil={25112515} />
-          <Game name="X3M Winter" imageSource="02" onPress={() => gameGo('x3m winter')} decor={decal} newUntil={25112015} />
+          <Game name="Wheelie Bike" imageSource="l" onPress={() => gameGo('wheelie bike')} decor={decal} newUntil={25112515} />
+          <Game name="X3M Winter" imageSource="0" onPress={() => gameGo('x3m winter')} decor={decal} newUntil={25112015} />
         </View>
 
         <TouchableOpacity style={styles.button} onPress={() => setShowHorror(!showHorror)}>
@@ -84,21 +80,19 @@ export default function Index() {
           <>
             <Text style={styles.noticeTitle}>🎃 Horror Games 🎃</Text>
             <View style={styles.gameList}>
-              <Game name="Granny" imageSource="j" onPress={() => gameGo('granny')} decor={decal} newUntil={25110615} pcOnly />
               <Game name="FNaF 1" imageSource="a" onPress={() => gameGo('f1')} decor={decal} newUntil={25120615} />
-              <Game name="FNaF 2" imageSource="a" onPress={() => gameGo('f2')} decor={decal} newUntil={25120615} pcOnly />
-              <Game name="UCN" imageSource="a" onPress={() => gameGo('ucn')} decor={decal} newUntil={25120615} pcOnly />
             </View>
           </>
         )}
       </ScrollView>
 
       <View>
-        <code style={{ margin: 10, color: 'white' }}>v6.1.2 [ 17/11/25 ]</code>
+        <code style={{ margin: 10, color: 'white' }}>v6.1.5 [ 21/11/25 ]</code>
         <View style={{ position: 'absolute', right: 10, flexDirection: 'row' }}>
           <Ionicons name="information-circle" size={28} color="white" onPress={() => Linking.openURL('https://raw.githubusercontent.com/onlinegames19/main-site/refs/heads/main/CREDITS')} />
           <Ionicons name="book" size={26} color="white" onPress={() => Linking.openURL('/behindcloseddoors.pdf')} />
           <Ionicons name="logo-github" size={28} color="white" onPress={() => Linking.openURL('https://github.com/onlinegames19')} />
+          
         </View>
       </View>
     </View>
@@ -116,28 +110,7 @@ const styles = StyleSheet.create({
   halloween: { position: 'absolute', height: 350, width: 400 },
   christmas: { position: 'absolute', height: 350, width: 400, bottom: 0 },
   "": { display: 'none' },
-  noticeBox: {
-    backgroundColor: '#001f3f',
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 15,
-    width: '50%',
-    alignSelf: 'center',
-    height: '20%',
-    alignContent: 'center',
-    justifyContent: 'center'
-  },
-  ctaButton: {
-    backgroundColor: 'rgba(135,189,229,1)',
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    borderRadius: 6,
-    alignItems: 'center',
-    marginTop: 10
-  },
-  ctaButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: '600'
-  },
+  noticeBox: { backgroundColor: '#001f3f', padding: 15, borderRadius: 10, marginBottom: 15, width: '50%', paddingBottom: 20, paddingTop: 20, alignSelf: 'center', alignContent: 'center', justifyContent: 'center' },
+  ctaButton: { backgroundColor: 'rgba(135,189,229,1)', paddingVertical: 10, paddingHorizontal: 15, borderRadius: 6, alignItems: 'center', marginTop: 10 },
+  ctaButtonText: { color: 'white', fontSize: 16, fontWeight: '600' },
 });

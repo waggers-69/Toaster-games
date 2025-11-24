@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import { analytics, logEvent } from '../../../../../../firebaseConfig';
+import { analytics, logEvent } from '@/app/firebaseConfig';
 import { v4 as uuidv4 } from 'uuid';
-import slugMap from '../../../../../../uuids';
+import slugMap from '@/app/uuids';
 
 const prefix = '../../../../../..';
 
@@ -19,21 +19,18 @@ const games: Record<string, [string, string]> = {
   'gunspin': [`${prefix}/gunspin/`, 'Gunspin'],
   'drive-mad': [`${prefix}/drive-mad/`, 'Drive Mad'],
   'roper': [`${prefix}/roper/`, 'Roper'],
-  'survival-race': [`/+not-found.html`, 'Survival Race'],
+  'survival-race': [`${prefix}/survival-race`, 'Survival Race'],
   'pens': [`${prefix}/penkick/`, 'Penalty Kick Online'],
   'darts': [`${prefix}/dartspro/`, 'Darts Pro'],
   'idle-foot': [`${prefix}/idle-football/`, 'Idle Football'],
   'btd': [`${prefix}/btd5.htm`, 'BTD5'],
   'ccl': [`${prefix}/ccl.htm`, 'Crazy Crash Landing'],
-  'run3': [`${prefix}/run3/`, 'Run 3'],
   'pvz': [`${prefix}/pvz/`, 'Plants VS Zombies'],
   'spiral-roll': [`${prefix}/slice-roll/`, 'Spiral Roll'],
   'tap-goal': [`${prefix}/tap-goal/`, 'Tap Goal'],
   'draw-climb': [`${prefix}/draw-climber/`, 'Draw Climber'],
   'flappy-bird': [`${prefix}/flappy-bird/`, 'Flappy Bird'],
   'drift-boss': [`${prefix}/drift-boss/`, 'Drift Boss'],
-  'granny': [`${prefix}/granny.htm`, 'Granny'],
-  'swoop': [`${prefix}/swoop.htm`, 'Swoop'],
   'fast-runner': [`${prefix}/fast-runner/`, 'Fast Runner'],
   'roll': [`${prefix}/roll.html`, 'Roll'],
   'ragdoll-hit': [`${prefix}/ragdoll-hit/`, 'Ragdoll Hit'],
@@ -42,15 +39,9 @@ const games: Record<string, [string, string]> = {
   'slice-master': [`https://game-hub.nyc3.cdn.digitaloceanspaces.com/slice-master/index.html`, 'Slice Master'],
   'x3m-winter': [`${prefix}/x3m/`, 'Moto X3M Winter'],
   'wheelie-bike': [`${prefix}/wheelie-bike/`, 'Wheelie Bike'],
-  'tpo': [`${prefix}/tpo/`, 'Thief Puzzle Online'],
-  'f1': [`/+not-found.html`, 'Five Nights at Freddy\'s 1'],
-  'f2': [`/+not-found.html`, 'Five Nights at Freddy\'s 2'],
-  'ucn': [`/+not-found.html`, 'Ultimate Custom Night'],
+  'f1': [`${prefix}/fnaf/FNAF1/`, 'Five Nights at Freddy\'s 1'],
   'stack': [`${prefix}/stack/`, 'Stack'],
-  'nut-sort': [`/+not-found.html`, 'Nut Sort'],
   'crashy-road': [`${prefix}/crashyroad`, 'Crashy Road'],
-  'fireboy-and-watergirl': [`${prefix}/fireboy-and-watergirl.htm`, 'Fireboy and Watergirl'],
-  'snowball-io': [`${prefix}/snowball/`, 'Snowball.io'],
 };
 
 export default function GameScreen() {

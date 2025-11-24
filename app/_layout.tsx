@@ -86,12 +86,12 @@ export default function RootLayout({ initialBanner }: { initialBanner?: boolean 
         screenOptions={{
           headerLeft: () => (
             <>
-              <Text style={{ color: 'white', fontSize: 36, margin: 15 }} onPress={() => window.location.href = '/'}>⌂</Text>
-              <Text style={{ color: 'white', fontSize: 36, margin: 15 }} onPress={() => window.location.reload()}>⟳</Text>
+              <Text style={styles.iconTxt} onPress={() => window.location.href = '/'}>⌂</Text>
+              <Text style={styles.iconTxt} onPress={() => window.location.reload()}>⟳</Text>
             </>
           ),
           headerTitleAlign: 'center',
-          headerStyle: { backgroundColor: 'rgb(81,81,81)' },
+          headerStyle: { backgroundColor: 'rgba(30, 30, 30, 1)' },
           headerTitleStyle: { color: 'white' },
           headerRight: () => (
             <>
@@ -104,7 +104,8 @@ export default function RootLayout({ initialBanner }: { initialBanner?: boolean 
         <Stack.Screen
           name="index"
           options={{ 
-            headerTitle: HeaderLogo,
+            // headerTitle: HeaderLogo,
+            headerTitle: '✨ Sparkly ✨',
           }}>
           </Stack.Screen>
       </Stack>
@@ -114,11 +115,6 @@ export default function RootLayout({ initialBanner }: { initialBanner?: boolean 
 
 // --- Styles for the Header Image ---
 const styles = StyleSheet.create({
-  headerImage: {
-    width: 150*1.5,  // Adjust width to fit your design
-    height: 40*1.5,  // Adjust height to fit your design
-    // The height and width are crucial for displaying the image properly
-    borderRadius: 25,
-    opacity: 0.8
-  },
+  headerImage: { width: 150*1.5, height: 40*1.5, borderRadius: 25, opacity: 0.8 },
+  iconTxt: { color: 'white', fontSize: 36, margin: 15 }
 });
