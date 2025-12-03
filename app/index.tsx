@@ -44,7 +44,7 @@ export default function Index() {
           <Game name="Block Blast" imageSource="aa" onPress={() => gameGo('blockblast')} decor={decal} newUntil={25121015} />
           <Game name="BTD 5" imageSource="m" onPress={() => gameGo('btd')} decor={decal} />
           <Game name="CCL" imageSource="n" onPress={() => gameGo('ccl')} decor={decal} />
-          <Game name="Crashy Road" imageSource="j" onPress={() => gameGo('crashy road')} decor={decal} newUntil={25120115} />
+          <Game name="Crashy Road" imageSource="j" onPress={() => gameGo('crashy road')} decor={decal} newUntil={25120115} bugged/>
           <Game name="Darts Pro" imageSource="f" onPress={() => gameGo('darts')} decor={decal} />
           <Game name="Draw Climber" imageSource="g" onPress={() => gameGo('draw climb')} decor={decal} newUntil={25110615} />
           <Game name="Drift Boss" imageSource="u" onPress={() => gameGo('drift boss')} decor={decal} newUntil={25110615} />
@@ -75,7 +75,7 @@ export default function Index() {
           <Game name="TABS" imageSource="5" onPress={() => gameGo('tabs')} decor={decal} />
           <Game name="Tiny Fishing" imageSource="1" onPress={() => gameGo('tiny fishing')} decor={decal} />
           <Game name="Wheelie Bike" imageSource="l" onPress={() => gameGo('wheelie bike')} decor={decal} newUntil={25112515} />
-          <Game name="X3M Winter" imageSource="0" onPress={() => gameGo('x3m winter')} decor={decal} newUntil={25112015} />
+          <Game name="X3M Winter" imageSource="0" onPress={() => gameGo('x3m winter')} decor={decal} newUntil={25112015} bugged/>
         </View>
 
         <TouchableOpacity style={styles.button} onPress={() => setShowHorror(!showHorror)}>
