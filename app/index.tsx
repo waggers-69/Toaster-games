@@ -33,7 +33,7 @@ export default function Index() {
           <Game name="" imageSource="aa" onPress={() => gameGo('blockblast')} decor={decal} newUntil={25121015} />
           <Game name="" imageSource="m" onPress={() => gameGo('btd')} decor={decal} />
           <Game name="" imageSource="n" onPress={() => gameGo('ccl')} decor={decal} customBadge={"⭐️ FAN FAVOURITE ⭐️"}/>
-          <Game name="" imageSource="j" onPress={() => gameGo('crashy road')} decor={decal} newUntil={25120115} bugged/>
+          <Game name="" imageSource="j" onPress={() => gameGo('crashy road')} decor={decal} newUntil={25120115} fixed/>
           <Game name="" imageSource="f" onPress={() => gameGo('darts')} decor={decal} />
           <Game name="" imageSource="g" onPress={() => gameGo('draw climb')} decor={decal} newUntil={25110615} />
           <Game name="" imageSource="u" onPress={() => gameGo('drift boss')} decor={decal} newUntil={25110615} />
@@ -66,7 +66,7 @@ export default function Index() {
           <Game name="" imageSource="1" onPress={() => gameGo('new tiny fishing')} decor={decal} newUntil={25123015} fixed/>
           <Game name="" imageSource="1" onPress={() => gameGo('tiny fishing')} decor={decal} customBadge={"⭐️ FAN FAVOURITE ⭐️"}/>
           <Game name="" imageSource="l" onPress={() => gameGo('wheelie bike')} decor={decal} newUntil={25112515} />
-          <Game name="" imageSource="0" onPress={() => gameGo('x3m winter')} decor={decal} newUntil={25112015} bugged/>
+          <Game name="" imageSource="0" onPress={() => gameGo('x3m winter')} decor={decal} newUntil={25112015} fixed/>
         </View>
 
         <TouchableOpacity style={styles.button} onPress={() => setShowHorror(!showHorror)}>
@@ -77,8 +77,8 @@ export default function Index() {
           <>
             <Text style={styles.noticeTitle}>🎃 Horror Games 🎃</Text>
             <View style={styles.gameList}>
-              <Game name="FNaF 1" imageSource="a" onPress={() => gameGo('f1')} decor={decal} newUntil={25120615} />
-              <Game name="FNaF 2" imageSource="a" onPress={() => gameGo('f2')} decor={decal} newUntil={26010615} />
+              <Game name="" imageSource="a" onPress={() => gameGo('f1')} decor={decal} newUntil={25120615} />
+              <Game name="" imageSource="ah" onPress={() => gameGo('f2')} decor={decal} newUntil={26010615} />
             </View>
           </>
         )}

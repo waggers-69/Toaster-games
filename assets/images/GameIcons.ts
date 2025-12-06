@@ -42,5 +42,6 @@ export const gameIcons = {
   'ad': require('./game-icons/ad.png'),
   'ae': require('./game-icons/ae.png'),
   'af': require('./game-icons/af.jpg'),
-  'ag': require('./game-icons/ag.jpg')
+  'ag': require('./game-icons/ag.jpg'),
+  'ah': require('./game-icons/ah.webp')
 };
