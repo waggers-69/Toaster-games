@@ -26,6 +26,7 @@ const games: Record<string, [string, string]> = {
   'idle-foot': [`${prefix}/idle-football/`, 'Idle Football'],
   'btd': [`${prefix}/btd5.htm`, 'BTD5'],
   'ccl': [`${prefix}/ccl.htm`, 'Crazy Crash Landing'],
+  'nut-sort': [`${prefix}/nutsort/`, 'Nut Sort'],
   'pvz': [`${prefix}/pvz/`, 'Plants VS Zombies'],
   'spiral-roll': [`${prefix}/slice-roll/`, 'Spiral Roll'],
   'tap-goal': [`${prefix}/tap-goal/`, 'Tap Goal'],
@@ -55,6 +56,7 @@ const games: Record<string, [string, string]> = {
   'adventure-drivers': [`${prefix}/adventuredrivers/`, 'Adventure Drivers'],
   'a-small-world-cup': [`${prefix}/small-world-cup.html`, 'A Small World Cup'],
   'f2': [`${prefix}/fnaf/FNAF2/`, 'Five Nights at Freddy\'s 2'],
+  'f3': [`${prefix}/fnaf/FNAF3/`, 'Five Nights at Freddy\'s 3'],
 };
 
 export default function GameScreen() {

@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   },
   newBadge: {
     position: 'absolute',
-    bottom: 7.5,
+    top: 7.5,
     right: 10,
     backgroundColor: 'rgba(135,189,229,1)',
     color: 'white',
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   },
   pcBadge: {
     position: 'absolute',
-    bottom: 7.5,
+    top: 7.5,
     left: 10,
     backgroundColor: 'rgba(135,189,229,1)',
     color: 'white',
