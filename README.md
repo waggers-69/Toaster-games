@@ -22,4 +22,6 @@ https://sparxapi19.vercel.app <br>
 https://new-onlinegames12.netlify.app <br>
 https://onlinegames12.vercel.app <br>
 https://onlinegames12.onrender.com <br>
-https://sparxapi19.wasmer.app <br>
+https://sparxapi20.wasmer.app <br>
+https://sparx-learning.cloud-ip.cc <br>
+https://sparkly.mygamesonline.org <br>
