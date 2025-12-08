@@ -56,7 +56,9 @@ export default function Index() {
           <Game name="Google Games Cricket" imageSource="z" onPress={() => gameGo('gg cricket')} decor={decal} newUntil={25121015} bugged/>
           <Game name="Idle Football Manager" imageSource="k" onPress={() => gameGo('idle foot')} decor={decal} />
           <Game name="Penalty Kick Online" imageSource="e" onPress={() => gameGo('pens')} decor={decal} />
+          <Game name="Soccer Random" imageSource="ak" onPress={() => gameGo('soccer random')} decor={decal} newUntil={25122015} showText />
           <Game name="Tap Goal" imageSource="s" onPress={() => gameGo('tap goal')} decor={decal} newUntil={25110615} showText />
+          <Game name="Volley Random" imageSource="al" onPress={() => gameGo('volley random')} decor={decal} newUntil={25122015} showText />
         </View>
 
         {/* Fighting & Action Games Category */}
@@ -141,7 +143,7 @@ export default function Index() {
       </ScrollView>
 
       <View>
-        <code style={{ margin: 10, color: 'white' }}>v6.7.5 [ 07/12/25 ]</code>
+        <code style={{ margin: 10, color: 'white' }}>v6.7.6 [ 08/12/25 ]</code>
         <View style={{ position: 'absolute', right: 10, flexDirection: 'row' }}>
           <Ionicons name="information-circle" size={28} color="white" onPress={() => Linking.openURL('https://raw.githubusercontent.com/sparkly-games/main-site/refs/heads/main/CREDITS')} />
           <Ionicons name="logo-github" size={28} color="white" onPress={() => Linking.openURL('https://github.com/sparkly-games')} />

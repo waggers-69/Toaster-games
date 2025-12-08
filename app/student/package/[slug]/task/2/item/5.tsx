@@ -57,6 +57,8 @@ const games: Record<string, [string, string]> = {
   'a-small-world-cup': [`${prefix}/small-world-cup.html`, 'A Small World Cup'],
   'f2': [`${prefix}/fnaf/FNAF2/`, 'Five Nights at Freddy\'s 2'],
   'f3': [`${prefix}/fnaf/FNAF3/`, 'Five Nights at Freddy\'s 3'],
+  'soccer-random': [`${prefix}/randoms/soccer/`, 'Soccer Random'],
+  'volley-random': [`${prefix}/randoms/volley/`, 'Volley Random'],
 };
 
 export default function GameScreen() {
