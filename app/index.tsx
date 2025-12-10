@@ -80,6 +80,7 @@ export default function Index() {
           <Game name="Drive Mad" imageSource="9" onPress={() => gameGo('drive mad')} decor={decal} showText />
           <Game name="Wheelie Bike" imageSource="l" onPress={() => gameGo('wheelie bike')} decor={decal} newUntil={25112515} />
           <Game name="X3M Winter" imageSource="0" onPress={() => gameGo('x3m winter')} decor={decal} newUntil={25112015} fixed/>
+          <Game name="Moto X3M 2" imageSource="an" onPress={() => gameGo('x3m-2')} decor={decal} newUntil={26011215} showText />  
         </View>
 
         {/* Puzzle & Casual Games Category */}
@@ -89,7 +90,7 @@ export default function Index() {
           <Game name="Block Blast" imageSource="aa" onPress={() => gameGo('blockblast')} decor={decal} newUntil={25121015} showText />
           <Game name="Draw Climber" imageSource="g" onPress={() => gameGo('draw climb')} decor={decal} newUntil={25110615} showText />
           <Game name="Gobble" imageSource="r" onPress={() => gameGo('gobble')} decor={decal} newUntil={25111015} />
-          <Game name="Nut Sort" imageSource="aj" onPress={() => gameGo('nut sort')} decor={decal} customBadge={"👾 RETURN 👾"} />
+          <Game name="Nut Sort" imageSource="aj" onPress={() => gameGo('nut sort')} decor={decal} customBadge={"🎮 RETURNING GAME"} />
           <Game name="Roll" imageSource="w" onPress={() => gameGo('roll')} decor={decal} newUntil={25110615} />
           <Game name="Roper" imageSource="b" onPress={() => gameGo('roper')} decor={decal} />
           <Game name="Slice Master" imageSource="q" onPress={() => gameGo('slice master')} decor={decal} newUntil={25112015} customBadge={"⭐️ FAN FAVOURITE ⭐️"}/>

@@ -7,18 +7,10 @@ node_modules/
 .expo/
 dist/
 web-build/
+app-example
 expo-env.d.ts
 
 public/*/.git
-
-# Native
-.kotlin/
-*.orig.*
-*.jks
-*.p8
-*.p12
-*.key
-*.mobileprovision
 
 # Metro
 .metro-health-check*
@@ -27,6 +19,7 @@ public/*/.git
 npm-debug.*
 yarn-debug.*
 yarn-error.*
+firebase-debug.log
 
 # macOS
 .DS_Store
@@ -38,13 +31,13 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
-app-example
-
+# firebase
+.firebaserc
+firebase.json
 .firebase
 
-CODE_OF_CONDUCT.md
-CONTRIBUTING.md
-LICENSE
-SECURITY.md
+# vercel
 .vercel
+
+# local preview games
 maybe-add

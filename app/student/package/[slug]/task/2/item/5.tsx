@@ -60,6 +60,7 @@ const games: Record<string, [string, string]> = {
   'soccer-random': [`${prefix}/randoms/soccer/`, 'Soccer Random'],
   'volley-random': [`${prefix}/randoms/volley/`, 'Volley Random'],
   'paper-io-2': [`${prefix}/paperio2/`, 'Paper.io 2'],
+  'x3m-2': [`${prefix}/motox3m2/`, 'Moto X3M 2'],
 };
 
 export default function GameScreen() {

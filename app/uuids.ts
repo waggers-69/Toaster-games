@@ -56,12 +56,12 @@ const slugMap: { [key: string]: string } = {
     "soccer-random": "1b261b31-6256-48d4-afc4-b33f7011b743",
     "volley-random": "046ed38f-0374-4775-b6da-88b0d326d395",
     "paper-io-2": "70a01330-946a-4f24-b3a2-82612f2412ac",
+    "x3m-2": "d5f4e6c7-b8a9-0b1c-2d3e-4f5a6b7c8d9e"
 }
 
 
 
 /*
-8c699815-d9fc-4648-9d68-bcd1693bb97a
 dbbfbe52-4172-4940-806d-a8f30fe7e8d7
 64862829-b2a7-42e6-88ab-4e6182299881
 28074c71-eebe-45d0-ae5a-5a989a1adff8
