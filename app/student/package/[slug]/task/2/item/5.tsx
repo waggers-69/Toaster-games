@@ -62,6 +62,7 @@ const games: Record<string, [string, string]> = {
   'paper-io-2': [`${prefix}/paperio2/`, 'Paper.io 2'],
   'x3m-2': [`${prefix}/motox3m2/`, 'Moto X3M 2'],
   'cookie-clicker': [`${prefix}/cookieclicker/`, 'Cookie Clicker'],
+  'gdwv3d': [`${prefix}/wave3d/`, 'Geometry Dash Wave 3D'],
 };
 
 export default function GameScreen() {

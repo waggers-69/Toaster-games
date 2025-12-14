@@ -41,6 +41,7 @@ export default function Index() {
           <Game name="Flappy Bird" imageSource="h" onPress={() => gameGo('flappy bird')} decor={decal} newUntil={25110615} showText />
           <Game name="Geometry Dash 3D" imageSource="o" onPress={() => gameGo('gd3d')} decor={decal} newUntil={25110615} showText />
           <Game name="Geometry Dash Wave" imageSource="x" onPress={() => gameGo('gdwv')} decor={decal} newUntil={25121015} showText />
+          <Game name="Geometry Dash Wave 3D" imageSource="x" onPress={() => gameGo('gdwv3d')} decor={decal} newUntil={25123015} showText bugged/>
           <Game name="OvO" imageSource="7" onPress={() => gameGo('ovo')} decor={decal} />
           <Game name="Subway Surfers" imageSource="3" onPress={() => gameGo('subway surfers')} decor={decal} />
           <Game name="Survival Race" imageSource="d" onPress={() => gameGo('survival race')} decor={decal} bugged/>
@@ -140,7 +141,7 @@ export default function Index() {
       </ScrollView>
 
       <View>
-        <code style={{ margin: 10, color: 'white' }}>v6.7.10 [ 11/12/25 ]</code>
+        <code style={{ margin: 10, color: 'white' }}>v6.7.23 [ 14/12/25 ]</code>
         <View style={{ position: 'absolute', right: 10, flexDirection: 'row' }}>
           <Ionicons name="logo-github" size={28} color="white" onPress={() => Linking.openURL('https://github.com/sparkly-games')} />
           

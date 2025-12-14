@@ -58,12 +58,12 @@ const slugMap: { [key: string]: string } = {
     "paper-io-2": "70a01330-946a-4f24-b3a2-82612f2412ac",
     "x3m-2": "d5f4e6c7-b8a9-0b1c-2d3e-4f5a6b7c8d9e",
     "cookie-clicker": "dbbfbe52-4172-4940-806d-a8f30fe7e8d7",
+    "gdwv3d": "8ae05588-a1c6-4e79-b407-d7c813f02a88",
 }
 
 
 
 /*
-64862829-b2a7-42e6-88ab-4e6182299881
 28074c71-eebe-45d0-ae5a-5a989a1adff8
 328948d5-e966-4a64-ab5a-977abf94dbfc
 c22c8274-fd8f-4a6f-8222-d041017b8ac9
