@@ -40,7 +40,7 @@ export default function Index() {
           <Game name="Fast Runner" imageSource="t" onPress={() => gameGo('fast runner')} decor={decal} newUntil={25110615} showText />
           <Game name="Flappy Bird" imageSource="h" onPress={() => gameGo('flappy bird')} decor={decal} newUntil={25110615} showText />
           <Game name="Geometry Dash 3D" imageSource="o" onPress={() => gameGo('gd3d')} decor={decal} newUntil={25110615} showText />
-          <Game name="Geometry Dash Wave" imageSource="x" onPress={() => gameGo('gdwv')} decor={decal} newUntil={25121015} showText />
+          <Game name="Geometry Dash Wave" imageSource="x" onPress={() => gameGo('gdwv')} decor={decal} newUntil={25121015} showText customBadge={"⭐️ FAN FAVOURITE ⭐️"} />
           <Game name="Geometry Dash Wave 3D" imageSource="x" onPress={() => gameGo('gdwv3d')} decor={decal} newUntil={25123015} showText bugged/>
           <Game name="OvO" imageSource="7" onPress={() => gameGo('ovo')} decor={decal} />
           <Game name="Subway Surfers" imageSource="3" onPress={() => gameGo('subway surfers')} decor={decal} />
@@ -50,7 +50,7 @@ export default function Index() {
         {/* Sports Games Category */}
         <Text style={styles.categoryTitle}>⚽ Sports & Competitive 🏆</Text>
         <View style={styles.gameList}>
-          <Game name="A Small World Cup" imageSource="ag" onPress={() => gameGo('a small world cup')} decor={decal} newUntil={25122015} showText />
+          <Game name="A Small World Cup" imageSource="ag" onPress={() => gameGo('a small world cup')} decor={decal} newUntil={25122015} showText customBadge={"⭐️ FAN FAVOURITE ⭐️"} />
           <Game name="Basket Random" imageSource="ac" onPress={() => gameGo('ba random')} decor={decal} newUntil={25121015} showText />
           <Game name="Darts Pro" imageSource="f" onPress={() => gameGo('darts')} decor={decal} showText />
           <Game name="Google Games Baseball" imageSource="y" onPress={() => gameGo('gg baseball')} decor={decal} newUntil={25121015} bugged/>
