@@ -51,4 +51,5 @@ export const gameIcons = {
   'am': require('./game-icons/am.png'),
   'an': require('./game-icons/an.jpg'),
   'ao': require('./game-icons/ao.jpg'),
+  'ap': require('./game-icons/ap.jpg'),
 };

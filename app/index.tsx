@@ -6,6 +6,8 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import slugMap from './uuids';
 
 
+const Spacer = () => <View style={{ width: 10 }} />;
+
 const decal = "christmas";
 
 export default function Index() {
@@ -81,6 +83,7 @@ export default function Index() {
           <Game name="Drive Mad" imageSource="9" onPress={() => gameGo('drive mad')} decor={decal} showText />
           <Game name="Wheelie Bike" imageSource="l" onPress={() => gameGo('wheelie bike')} decor={decal} newUntil={25112515} />
           <Game name="X3M Winter" imageSource="0" onPress={() => gameGo('x3m winter')} decor={decal} newUntil={25112015} fixed/>
+          <Game name="Swoop" imageSource="ap" onPress={() => gameGo('swoop')} decor={decal} customBadge={"🎮 RETURNING GAME"} />
           <Game name="Moto X3M 2" imageSource="an" onPress={() => gameGo('x3m-2')} decor={decal} newUntil={26011215} showText />  
         </View>
 
@@ -141,10 +144,12 @@ export default function Index() {
       </ScrollView>
 
       <View>
-        <code style={{ margin: 10, color: 'white' }}>v6.7.30 [ 16/12/25 ]</code>
+        <code style={{ margin: 10, color: 'white' }}>v6.7.37 [ 17/12/25 ]</code>
         <View style={{ position: 'absolute', right: 10, flexDirection: 'row' }}>
-          <Ionicons name="logo-github" size={28} color="white" onPress={() => Linking.openURL('https://github.com/sparkly-games')} />         
+          <Ionicons name="logo-github" size={28} color="white" onPress={() => Linking.openURL('https://github.com/sparkly-games')} />
+          <Spacer />         
           <Ionicons name="videocam-outline" size={28} color="white" onPress={() => alert("Rollercoaster videos coming soon.")} />
+          <Spacer />   
         </View>
       </View>
     </View>
