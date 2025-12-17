@@ -107,16 +107,17 @@ Feature requests are welcome too!
 ### **Current / Up-to-Date**
 - https://sparkly.creepers.sbs  
 - https://sparxapi19.vercel.app
+
+### **Portal Mirrors**
 - https://sparxapi19.firebaseapp.com
-- https://sparxapi19.web.app  
+- https://sparxapi19.web.app
+- https://sparkly.mygamesonline.org
 
 ### **Archived / Outdated Builds**
 - https://new-onlinegames12.netlify.app  
-- https://onlinegames12.vercel.app  
 - https://onlinegames12.onrender.com  
 - https://sparxapi20.wasmer.app  
 - https://sparx-learning.cloud-ip.cc  
-- http://sparkly.mygamesonline.org
 - https://onlinegames12.web.app  
 
 ---
