@@ -148,7 +148,7 @@ export default function Index() {
         <View style={{ position: 'absolute', right: 10, flexDirection: 'row' }}>
           <Ionicons name="logo-github" size={28} color="white" onPress={() => Linking.openURL('https://github.com/sparkly-games')} />
           <Spacer />         
-          <Ionicons name="videocam-outline" size={28} color="white" onPress={() => alert("Rollercoaster videos coming soon.")} />
+          <Ionicons name="videocam-outline" size={28} color="white" onPress={() => router.push('/vids')} />
           <Spacer />   
         </View>
       </View>
