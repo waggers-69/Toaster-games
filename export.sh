@@ -7,6 +7,3 @@ npm run export
 
 cd ../
 echo "Export complete."
-echo "Serving..."
-cd export
-npx serve -p 80
