@@ -41,4 +41,7 @@ firebase.json
 
 # local preview games
 maybe-add
+export
 
+!site
+!docs

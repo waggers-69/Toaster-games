@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sparkly | Level Up Your Shine</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        'spark-dark': '#030712',
+                        'spark-violet': '#8b5cf6',
+                        'spark-pink': '#ec4899',
+                        'spark-blue': '#3b82f6',
+                    },
+                    animation: {
+                        'shimmer': 'shimmer 3s infinite linear',
+                        'float': 'float 5s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        shimmer: {
+                            '0%': { backgroundPosition: '-200% 0' },
+                            '100%': { backgroundPosition: '200% 0' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px) scale(1)' },
+                            '50%': { transform: 'translateY(-10px) scale(1.02)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        /* Shimmering text effect for the brand name */
+        .shimmer-text {
+            @apply bg-clip-text text-transparent bg-[length:200%_auto];
+            background-image: linear-gradient(to right, #f6ec5c 0%, #ecb848 25%, #f6733b 50%, #ec4899 75%, #f65c5c 100%);
+        }
+        
+        .glass {
+            @apply bg-white/5 backdrop-blur-xl border border-white/10;
+        }
+
+        body {
+            background-color: #030712;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.15) 0px, transparent 50%);
+        }
+    </style>
+</head>
+<body class="text-slate-200 antialiased selection:bg-spark-violet/30">
+
+    <header class="fixed w-full z-50 top-0 px-6 py-4 border-b border-white/5 bg-spark-dark/60 backdrop-blur-lg">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="/" class="flex items-center space-x-3 group">
+                <img src="/favicon.ico" alt="sparkly logo" class="w-8 h-8 group-hover:rotate-12 transition-transform duration-300">
+                <span class="text-2xl font-extrabold tracking-tighter shimmer-text animate-shimmer">Sparkly Games</span>
+            </a>
+            
+            <nav class="hidden md:flex space-x-8 text-sm font-bold uppercase tracking-widest">
+                <a href="#" class="hover:text-spark-violet transition-colors">Games</a>
+                <a href="#" class="hover:text-spark-violet transition-colors">Universe</a>
+                <a href="/docs/" class="text-slate-400 hover:text-white transition-colors">Docs</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="relative pt-32 pb-20">
+        <section class="max-w-7xl mx-auto px-6 text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full glass mb-8 animate-float">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-spark-pink opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-spark-pink"></span>
+                </span>
+                <span class="text-xs font-bold tracking-tighter text-slate-300 uppercase">Version 7 coming soon.</span>
+            </div>
+
+            <h1 class="text-6xl md:text-8xl font-black tracking-tighter mb-6 bg-gradient-to-b from-white to-slate-500 bg-clip-text text-transparent">
+                UNLEASH THE <br> <span class="shimmer-text animate-shimmer">MAGIC WITHIN.</span>
+            </h1>
+
+            <p class="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-12 leading-relaxed">
+                Experience the next generation of social gaming. Built for creators, players, and everyone who loves a little bit of glitter.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+                <a href="/play" class="group relative px-10 py-5 bg-white text-spark-dark font-black text-xl rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(255,255,255,0.3)] overflow-hidden">
+                    <span class="relative z-10 flex items-center gap-2">
+                        START PLAYING
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path fill-rule="evenodd" d="M12.97 3.97a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 11-1.06-1.06l6.22-6.22H3a.75.75 0 010-1.5h16.19l-6.22-6.22a.75.75 0 010-1.06z" clip-rule="evenodd" /></svg>
+                    </span>
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] pointer-events-none"></div>
+                </a>
+
+                <a href="/sparkly-dev" class="glass px-10 py-5 rounded-2xl font-bold text-xl hover:bg-white/10 transition-all duration-300">
+                    sparkly.dev
+                </a>
+            </div>
+        </section>
+
+        <section class="max-w-7xl mx-auto px-6 mt-32 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="glass p-8 rounded-3xl group hover:border-spark-violet/50 transition-all">
+                <div class="text-4xl mb-4 group-hover:scale-110 transition-transform inline-block">✨</div>
+                <h3 class="text-xl font-bold mb-2">Pure Polish</h3>
+                <p class="text-slate-400">Every frame and interaction is tuned for maximum satisfaction.</p>
+            </div>
+            <div class="glass p-8 rounded-3xl group hover:border-spark-pink/50 transition-all">
+                <div class="text-4xl mb-4 group-hover:scale-110 transition-transform inline-block">🚀</div>
+                <h3 class="text-xl font-bold mb-2">Fast Access</h3>
+                <p class="text-slate-400">No downloads, no lag. Jump into the world of Sparkly instantly from your browser.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-12 border-t border-white/5 text-center">
+        <div class="flex items-center justify-center space-x-2 mb-4">
+            <img src="/favicon.ico" alt="logo" class="w-5 h-5 opacity-50">
+            <span class="text-slate-500 font-bold tracking-widest text-xs uppercase">Sparkly ecosystem</span>
+        </div>
+        <p class="text-slate-600 text-sm">© 2025 Sparkly Games. Keep shining.</p>
+    </footer>
+
+</body>
+</html>
