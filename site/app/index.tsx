@@ -34,7 +34,6 @@ export default function Home() {
 
   return (
     <View style={styles.root}>
-      <StatusBar style="light" />
 
       {/* Header */}
       <View style={styles.header}>
@@ -46,10 +45,10 @@ export default function Home() {
             </Text>
           </View>
 
+            <View style={{width: 15}} />
+
           <View style={styles.nav}>
-            <Text style={styles.navItem}>Games</Text>
-            <Text style={styles.navItem}>Universe</Text>
-            <Text style={[styles.navItem, styles.navMuted]}>Docs</Text>
+            <Text style={[styles.navItem, styles.navMuted]} onPress={() => router.push('/docs')}>Docs</Text>
           </View>
         </View>
       </View>
@@ -80,7 +79,7 @@ export default function Home() {
           <View style={styles.buttons}>
             <Pressable
               style={styles.primaryButton}
-              onPress={() => router.push('/play')}
+              onPress={() => router.push('/play/')}
             >
               <Text style={styles.primaryText}>START PLAYING →</Text>
             </Pressable>
@@ -359,3 +358,7 @@ const styles = StyleSheet.create({
     color: '#6b7280',
   },
 });
+
+export const screenOptions = {
+  headerShown: false,
+};

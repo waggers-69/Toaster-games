@@ -107,6 +107,7 @@ export default function RootLayout({ initialBanner }: { initialBanner?: boolean 
             // headerTitle: '✨ Sparkly ✨',
           }}>
           </Stack.Screen>
+          <Stack.Screen name="index" options={{ headerShown: false }} />
       </Stack>
     </>
   );
