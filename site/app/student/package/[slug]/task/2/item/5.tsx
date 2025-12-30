@@ -112,6 +112,7 @@ export default function GameScreen() {
           friendlySlug: friendlyKey,
           gameUrl,
           path: typeof window !== 'undefined' ? new URL(gameUrl, window.location.origin).pathname : null,
+          dev: window.location.href.includes("localhost") ? 'true' : 'false',
         });
       } catch (e) {
         // swallow logging errors
