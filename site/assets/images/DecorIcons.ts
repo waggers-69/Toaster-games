@@ -13,4 +13,5 @@ import christmas3 from './decal/christmas3.png';
 export const decorIcons = {
   halloween: [halloween1, halloween2, halloween3, empty, empty, empty, empty],
   christmas: [christmas1, christmas2, christmas3, empty, empty, empty, empty],
+  "new-year": [empty],
 };

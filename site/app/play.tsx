@@ -1,173 +1,329 @@
-import React, { useState } from 'react';
-import { Text, View, StyleSheet, ScrollView, TouchableOpacity, Linking, Image } from 'react-native';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import {
+  Text,
+  View,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  Animated,
+  TextInput,
+  useWindowDimensions,
+} from 'react-native';
 import { useRouter } from 'expo-router';
-import { Game } from '../assets/components/Game';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { Game } from '../assets/components/Game';
 import slugMap from './uuids';
 
+const decal = 'new-year';
 
-const Spacer = () => <View style={{ width: 5 }} />;
+const LS_FAVS = 'sparkly:favs';
+const LS_RECENT = 'sparkly:recent';
 
-const decal = "christmas";
+type GameTuple = [name: string, img: string, uri: string, horror?: boolean];
+
+const ALL_GAMES: GameTuple[] = [
+  ['A Dance of Fire and Ice', 'ad', 'adofai'],
+  ['A Small World Cup', 'ag', 'a-small-world-cup'],
+  ['Adventure Drivers', 'ae', 'adventure-drivers'],
+  ['Basket Random', 'ac', 'ba-random'],
+  ['BitLife', '6', 'bitlife'],
+  ['Block Blast', 'aa', 'blockblast'],
+  ['Bloons Tower Defence 5', 'm', 'btd'],
+  ['Boxing Random', 'ab', 'bo-random'],
+  ['Cookie Clicker', 'ao', 'cookie-clicker'],
+  ['Crazy Crash Landing', 'n', 'ccl'],
+  ['Crashy Road', 'j', 'crashy-road'],
+  ['Darts Pro', 'f', 'darts'],
+  ['Draw Climber', 'g', 'draw-climb'],
+  ['Drive Mad', '9', 'drive-mad'],
+  ['Duck Duck Clicker', '4', 'duck-clicker'],
+  ['Fast Runner', 't', 'fast-runner'],
+  ['Flappy Bird', 'h', 'flappy-bird'],
+  ['Five Nights at Freddy’s 1', 'a', 'f1', true],
+  ['Five Nights at Freddy’s 2', 'ah', 'f2', true],
+  ['Five Nights at Freddy’s 3', 'ai', 'f3', true],
+  ['Geometry Dash 3D', 'o', 'gd3d'],
+  ['Geometry Dash Wave', 'x', 'gdwv'],
+  ['Geometry Dash Wave 3D', 'x', 'gdwv3d'],
+  ['Gobble', 'r', 'gobble'],
+  ['Google Games Baseball', 'y', 'gg-baseball'],
+  ['Google Games Cricket', 'z', 'gg-cricket'],
+  ['GunSpin', '8', 'gunspin'],
+  ['Idle Football Manager', 'k', 'idle-foot'],
+  ['Moto X3M 2', 'an', 'x3m-2'],
+  ['NEW Tiny Fishing', '1', 'new-tiny-fishing'],
+  ['Nut Sort', 'aj', 'nut-sort'],
+  ['OvO', '7', 'ovo'],
+  ['Paper.io 2', 'am', 'paper-io-2'],
+  ['Penalty Kick Online', 'e', 'pens'],
+  ['Plants vs Zombies', 'p', 'pvz'],
+  ['Ragdoll Archers', '2', 'ragdoll-archers'],
+  ['Ragdoll Hit', 'c', 'ragdoll-hit'],
+  ['Roll', 'w', 'roll'],
+  ['Roper', 'b', 'roper'],
+  ['Slice Master', 'q', 'slice-master'],
+  ['Soccer Random', 'ak', 'soccer-random'],
+  ['Spiral Roll', 'i', 'spiral-roll'],
+  ['Stack', 'v', 'stack'],
+  ['Subway Surfers', '3', 'subway-surfers'],
+  ['Survival Race', 'd', 'survival-race'],
+  ['Tap Goal', 's', 'tap-goal'],
+  ['There Is No Game', 'af', 'there-is-no-game'],
+  ['Thorns and Balloons', '5', 'tabs'],
+  ['Tiny Fishing', '1', 'tiny-fishing'],
+  ['Volley Random', 'al', 'volley-random'],
+  ['Wheelie Bike', 'l', 'wheelie-bike'],
+  ['X3M Winter', '0', 'x3m-winter'],
+  ['Drift Boss', 'u', 'drift-boss'],
+  ['Swoop', 'ap', 'swoop'],
+];
 
 export default function Index() {
   const router = useRouter();
-  const [showHorror, setShowHorror] = useState(false);
+  const { width } = useWindowDimensions();
 
-  const gameGo = (path: string) => { 
-    const slug = path.replace(/ /g, '-').toLowerCase();
-    const uuid = slugMap[slug];
-    if (uuid) router.push(`/student/package/${uuid}/task/2/item/5`);
+  const [query, setQuery] = useState('');
+  const [showHorror, setShowHorror] = useState(false);
+  const [view, setView] = useState<'all' | 'favs' | 'recent'>('all');
+  const [favs, setFavs] = useState<string[]>([]);
+  const [recent, setRecent] = useState<string[]>([]);
+
+  const floatAnim = useRef(new Animated.Value(0)).current;
+  const glowAnim = useRef(new Animated.Value(0.4)).current;
+
+  /* animations */
+  useEffect(() => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(floatAnim, { toValue: -8, duration: 2200, useNativeDriver: true }),
+        Animated.timing(floatAnim, { toValue: 0, duration: 2200, useNativeDriver: true }),
+      ])
+    ).start();
+
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(glowAnim, { toValue: 0.75, duration: 3000, useNativeDriver: true }),
+        Animated.timing(glowAnim, { toValue: 0.4, duration: 3000, useNativeDriver: true }),
+      ])
+    ).start();
+  }, []);
+
+  /* localStorage load */
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    try {
+      const f = localStorage.getItem(LS_FAVS);
+      const r = localStorage.getItem(LS_RECENT);
+      if (f) setFavs(JSON.parse(f));
+      if (r) setRecent(JSON.parse(r));
+    } catch {}
+  }, []);
+
+  const saveFavs = (next: string[]) => {
+    setFavs(next);
+    if (typeof window !== 'undefined')
+      localStorage.setItem(LS_FAVS, JSON.stringify(next));
   };
+
+  const saveRecent = (next: string[]) => {
+    setRecent(next);
+    if (typeof window !== 'undefined')
+      localStorage.setItem(LS_RECENT, JSON.stringify(next));
+  };
+
+  const toggleFav = (name: string) => {
+    saveFavs(
+      favs.includes(name)
+        ? favs.filter(f => f !== name)
+        : [...favs, name]
+    );
+  };
+
+  const openGame = (name: string) => {
+    const slug = ALL_GAMES[2];
+    const uuid = slugMap[slug];
+    if (!uuid) return;
+
+    saveRecent([name, ...recent.filter(r => r !== name)].slice(0, 12));
+    router.push(`/student/package/${uuid}/task/2/item/5`);
+  };
+
+  /* filter + sort */
+  const games = useMemo(() => {
+    let g = ALL_GAMES
+      .filter(([, , , horror]) => showHorror || !horror)
+      .filter(([name]) => name.toLowerCase().includes(query.toLowerCase()));
+
+    if (view === 'favs') g = g.filter(([n]) => favs.includes(n));
+    if (view === 'recent') g = g.filter(([n]) => recent.includes(n));
+
+    return g.sort((a, b) => a[0].localeCompare(b[0]));
+  }, [query, showHorror, view, favs, recent]);
+
+  /* responsive grid */
+  const columns = width < 420 ? 2 : width < 900 ? 3 : 4;
+  const itemWidth = Math.floor((width - 24) / columns);
 
   return (
     <View style={styles.container}>
-      <Image source={require(`@/assets/images/decal/${decal}-atmosphere.png`)} style={styles[decal]} />
-      <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-        <View style={{ marginBottom: 20 }}>
-          <View style={styles.noticeBox}>
-            <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold', marginBottom: 10, textAlign: 'center' }}>Sparkly Games Awards 2025</Text>
-            <Text style={{ color: 'white', fontSize: 14, marginBottom: 10, textAlign: 'center' }}>
-              Nominate your favourite games for the <span style={{ fontWeight: 'bold' }}>Sparkly Games Awards 2025</span>!
-            </Text>
-            <TouchableOpacity style={styles.ctaButton} onPress={() => Linking.openURL('https://forms.gle/9JmsT8GT3w3yKSeP7')}>
-              <Text style={styles.ctaButtonText}>Nominate Now</Text>
+      <Animated.View style={[styles.sparkleGlow, { opacity: glowAnim }]} />
+
+      <Image
+        source={require(`@/assets/images/decal/${decal}-atmosphere.png`)}
+        style={styles[decal]}
+      />
+
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <Animated.View style={[styles.noticeBox, { transform: [{ translateY: floatAnim }] }]}>
+          <Text style={styles.noticeTitle}>✨ Sparkly Games ✨</Text>
+          <Text style={styles.noticeText}>v6.9.4 · 31/12/25</Text>
+          <Text style={styles.noticeText}>Search · Favourites · Recent · A–Z</Text>
+        </Animated.View>
+
+        <TextInput
+          value={query}
+          onChangeText={setQuery}
+          placeholder="Search games…"
+          placeholderTextColor="#9ca3af"
+          style={styles.search}
+        />
+
+        <View style={styles.toggles}>
+          {['all', 'favs', 'recent'].map(v => (
+            <TouchableOpacity
+              key={v}
+              onPress={() => setView(v as any)}
+              style={[styles.toggle, view === v && styles.toggleActive]}
+            >
+              <Text style={styles.toggleText}>
+                {v === 'all' ? 'All' : v === 'favs' ? 'Favourites' : 'Recent'}
+              </Text>
             </TouchableOpacity>
-          </View>
-        </View>
-        
-        {/* Platformer / Runner Games Category */}
-        <Text style={styles.categoryTitle}>🏃 Platformer / Runner Games 💨</Text>
-        <View style={styles.gameList}>
-          <Game name="Fast Runner" imageSource="t" onPress={() => gameGo('fast runner')} decor={decal}   />
-          <Game name="Flappy Bird" imageSource="h" onPress={() => gameGo('flappy bird')} decor={decal}   />
-          <Game name="Geometry Dash 3D" imageSource="o" onPress={() => gameGo('gd3d')} decor={decal}   />
-          <Game name="Geometry Dash Wave" imageSource="x" onPress={() => gameGo('gdwv')} decor={decal}   customBadge={"⭐️ FAN FAVOURITE ⭐️"} />
-          <Game name="Geometry Dash Wave 3D" imageSource="x" onPress={() => gameGo('gdwv3d')} decor={decal}   bugged/>
-          <Game name="OvO" imageSource="7" onPress={() => gameGo('ovo')} decor={decal} />
-          <Game name="Subway Surfers" imageSource="3" onPress={() => gameGo('subway surfers')} decor={decal} />
-          <Game name="Survival Race" imageSource="d" onPress={() => gameGo('survival race')} decor={decal} bugged/>
+          ))}
         </View>
 
-        {/* Sports Games Category */}
-        <Text style={styles.categoryTitle}>⚽ Sports & Competitive 🏆</Text>
-        <View style={styles.gameList}>
-          <Game name="A Small World Cup" imageSource="ag" onPress={() => gameGo('a small world cup')} decor={decal}   customBadge={"⭐️ FAN FAVOURITE ⭐️"} />
-          <Game name="Basket Random" imageSource="ac" onPress={() => gameGo('ba random')} decor={decal}   />
-          <Game name="Darts Pro" imageSource="f" onPress={() => gameGo('darts')} decor={decal}  />
-          <Game name="Google Games Baseball" imageSource="y" onPress={() => gameGo('gg baseball')} decor={decal}  bugged/>
-          <Game name="Google Games Cricket" imageSource="z" onPress={() => gameGo('gg cricket')} decor={decal}  fixed/>
-          <Game name="Idle Football Manager" imageSource="k" onPress={() => gameGo('idle foot')} decor={decal} />
-          <Game name="Penalty Kick Online" imageSource="e" onPress={() => gameGo('pens')} decor={decal} />
-          <Game name="Soccer Random" imageSource="ak" onPress={() => gameGo('soccer random')} decor={decal}   />
-          <Game name="Tap Goal" imageSource="s" onPress={() => gameGo('tap goal')} decor={decal}   />
-          <Game name="Volley Random" imageSource="al" onPress={() => gameGo('volley random')} decor={decal}   />
-        </View>
-
-        {/* Fighting & Action Games Category */}
-        <Text style={styles.categoryTitle}>🥊 Fighting & Ragdoll Action 💥</Text>
-        <View style={styles.gameList}>
-          <Game name="Boxing Random" imageSource="ab" onPress={() => gameGo('bo random')} decor={decal}   />
-          <Game name="GunSpin" imageSource="8" onPress={() => gameGo('gunspin')} decor={decal} />
-          <Game name="Ragdoll Archers" imageSource="2" onPress={() => gameGo('ragdoll archers')} decor={decal} />
-          <Game name="Ragdoll Hit" imageSource="c" onPress={() => gameGo('ragdoll hit')} decor={decal}  />
-        </View>
-
-        {/* Driving & Stunt Games Category */}
-        <Text style={styles.categoryTitle}>🚗 Driving & Stunt Games 🚧</Text>
-        <View style={styles.gameList}>
-          <Game name="Adventure Drivers" imageSource="ae" onPress={() => gameGo('adventure drivers')} decor={decal}   />
-          <Game name="Crazy Crash Landing" imageSource="n" onPress={() => gameGo('ccl')} decor={decal} customBadge={"⭐️ FAN FAVOURITE ⭐️"}  />
-          <Game name="Crashy Road" imageSource="j" onPress={() => gameGo('crashy road')} decor={decal}  fixed/>
-          <Game name="Drift Boss" imageSource="u" onPress={() => gameGo('drift boss')} decor={decal}   />
-          <Game name="Drive Mad" imageSource="9" onPress={() => gameGo('drive mad')} decor={decal}  />
-          <Game name="Wheelie Bike" imageSource="l" onPress={() => gameGo('wheelie bike')} decor={decal}  />
-          <Game name="X3M Winter" imageSource="0" onPress={() => gameGo('x3m winter')} decor={decal}  fixed/>
-          <Game name="Swoop" imageSource="ap" onPress={() => gameGo('swoop')} decor={decal} customBadge={"🎮 RETURNING GAME"} />
-          <Game name="Moto X3M 2" imageSource="an" onPress={() => gameGo('x3m-2')} decor={decal}   />  
-        </View>
-
-        {/* Puzzle & Casual Games Category */}
-        <Text style={styles.categoryTitle}>🧩 Puzzle & Casual Games ✨</Text>
-        <View style={styles.gameList}>
-          <Game name="BitLife" imageSource="6" onPress={() => gameGo('bitlife')} decor={decal} customBadge={"⭐️ FAN FAVOURITE ⭐️"}  />
-          <Game name="Block Blast" imageSource="aa" onPress={() => gameGo('blockblast')} decor={decal}   />
-          <Game name="Draw Climber" imageSource="g" onPress={() => gameGo('draw climb')} decor={decal}   />
-          <Game name="Gobble" imageSource="r" onPress={() => gameGo('gobble')} decor={decal}  />
-          <Game name="Nut Sort" imageSource="aj" onPress={() => gameGo('nut sort')} decor={decal} customBadge={"🎮 RETURNING GAME"} />
-          <Game name="Roll" imageSource="w" onPress={() => gameGo('roll')} decor={decal}  />
-          <Game name="Roper" imageSource="b" onPress={() => gameGo('roper')} decor={decal} />
-          <Game name="Slice Master" imageSource="q" onPress={() => gameGo('slice master')} decor={decal}  customBadge={"⭐️ FAN FAVOURITE ⭐️"}/>
-          <Game name="Spiral Roll" imageSource="i" onPress={() => gameGo('spiral roll')} decor={decal}  />
-          <Game name="Stack" imageSource="v" onPress={() => gameGo('stack')} decor={decal}  />
-          <Game name="There is No Game" imageSource="af" onPress={() => gameGo('there is no game')} decor={decal} />
-        </View>
-
-        {/* Clicker & Idle Games Category */}
-        <Text style={styles.categoryTitle}>🎣 Clicker & Idle Games 💰</Text>
-        <View style={styles.gameList}>
-          <Game name="Duck Duck Clicker" imageSource="4" onPress={() => gameGo('duck clicker')} decor={decal}  />
-          <Game name="NEW Tiny Fishing" imageSource="1" onPress={() => gameGo('new tiny fishing')} decor={decal}  fixed/>
-          <Game name="Cookie Clicker" imageSource="ao" onPress={() => gameGo('cookie clicker')} decor={decal}  bugged/>
-          <Game name="Tiny Fishing" imageSource="1" onPress={() => gameGo('tiny fishing')} decor={decal} customBadge={"⭐️ FAN FAVOURITE ⭐️"}/>
-        </View>
-
-        {/* Strategy & Tower Defense Category */}
-        <Text style={styles.categoryTitle}>🛡️ Strategy & Tower Defense ♟️</Text>
-        <View style={styles.gameList}>
-          <Game name="Thorns and Balloons" imageSource="5" onPress={() => gameGo('tabs')} decor={decal} customBadge={"⭐️ FAN FAVOURITE ⭐️"}/>
-          <Game name="Bloons Tower Defence 5" imageSource="m" onPress={() => gameGo('btd')} decor={decal}  />
-          <Game name="Plants vs Zombies" imageSource="p" onPress={() => gameGo('pvz')} decor={decal}  />
-          <Game name="Paper.io 2" imageSource="am" onPress={() => gameGo('paper io 2')} decor={decal}  />
-        </View>
-
-        {/* Rhythm Games Category */}
-        <Text style={styles.categoryTitle}>🎶 Rhythm Games 🎵</Text>
-        <View style={styles.gameList}>
-          <Game name="A Dance of Fire and Ice" imageSource="ad" onPress={() => gameGo('adofai')} decor={decal}   />
-        </View>
-        
-        <TouchableOpacity style={styles.button} onPress={() => setShowHorror(!showHorror)}>
-          <Text style={styles.buttonText}>{showHorror ? 'Hide Horror' : 'Show Horror'}</Text>
+        <TouchableOpacity onPress={() => setShowHorror(!showHorror)}>
+          <Text style={styles.horrorTxt}>
+            {showHorror ? 'Hide Horror' : 'Show Horror'}
+          </Text>
         </TouchableOpacity>
 
-        {showHorror && (
-          <>
-            <Text style={styles.noticeTitle}>🎃 Horror Games 👻</Text>
-            <View style={styles.gameList}>
-              <Game name="Five Nights at Freddy's 1" imageSource="a" onPress={() => gameGo('f1')} decor={decal}  />
-              <Game name="Five Nights at Freddy's 2" imageSource="ah" onPress={() => gameGo('f2')} decor={decal}  />
-              <Game name="Five Nights at Freddy's 3" imageSource="ai" onPress={() => gameGo('f3')} decor={decal}  bugged/>
+        <View style={styles.grid}>
+          {games.map(([name, img]) => (
+            <View key={name} style={{ width: itemWidth }}>
+              <Game
+                name={name}
+                imageSource={img}
+                decor={decal}
+                onPress={() => openGame(name)}
+              />
+              <TouchableOpacity
+                onPress={() => toggleFav(name)}
+                style={styles.star}
+              >
+                <Ionicons
+                  name={favs.includes(name) ? 'star' : 'star-outline'}
+                  size={22}
+                  color="#facc15"
+                />
+              </TouchableOpacity>
             </View>
-          </>
-        )}
-      </ScrollView>
-
-      <View>
-        <code style={{ margin: 10, color: 'white' }}>v6.8.1 [ 22/12/25 ]</code>
-        <View style={{ position: 'absolute', right: 10, flexDirection: 'row' }}>
-          <Ionicons name="logo-octocat" size={28} color="white" onPress={() => Linking.openURL('https://github.com/sparkly-games')} />
-          <Spacer />         
-          <Ionicons name="logo-youtube" size={28} color="white" onPress={() => router.push('/vids')} />
-          <Spacer />   
+          ))}
         </View>
-      </View>
+      </ScrollView>
     </View>
   );
 }
 
+/* styles */
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#2b2b2bff' },
-  scrollContent: { flexGrow: 1, justifyContent: 'center', alignItems: 'center', paddingVertical: 20 },
-  categoryTitle: { color: 'white', fontSize: 22, fontWeight: 'bold', marginVertical: 15, textAlign: 'center' },
-  gameList: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' },
-  noticeTitle: { color: 'white', fontSize: 20, fontWeight: 'bold', marginBottom: 5, textAlign: 'center' },
-  button: { backgroundColor: '#F6C90E', paddingVertical: 12, paddingHorizontal: 20, borderRadius: 8, alignItems: 'center', marginBottom: 15 },
-  buttonText: { color: 'white', fontSize: 16, fontWeight: '600' },
-  halloween: { position: 'absolute', height: 350, width: 400 },
-  christmas: { position: 'absolute', height: 350, width: 400, bottom: 0 },
-  "": { display: 'none' },
-  noticeBox: { backgroundColor: '#001f3f', padding: 15, borderRadius: 10, marginBottom: 15, width: '90%', paddingBottom: 20, paddingTop: 20, alignSelf: 'center', alignContent: 'center', justifyContent: 'center' },
-  ctaButton: { backgroundColor: '#F6C90E', paddingVertical: 10, paddingHorizontal: 15, borderRadius: 6, alignItems: 'center', marginTop: 10 },
-  ctaButtonText: { color: 'white', fontSize: 16, fontWeight: '600' },
+  container: { flex: 1, backgroundColor: '#030712' },
+  scrollContent: { paddingBottom: 40 },
+
+  sparkleGlow: {
+    position: 'absolute',
+    width: 420,
+    height: 420,
+    borderRadius: 420,
+    backgroundColor: '#ec4899',
+    top: -140,
+    alignSelf: 'center',
+    opacity: 0.5,
+  },
+
+  noticeBox: {
+    margin: 16,
+    padding: 22,
+    borderRadius: 20,
+    backgroundColor: 'rgba(255,255,255,0.06)',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.12)',
+  },
+
+  noticeTitle: {
+    color: '#f6ec5c',
+    fontSize: 22,
+    fontWeight: '900',
+    textAlign: 'center',
+  },
+
+  noticeText: {
+    color: '#e5e7eb',
+    textAlign: 'center',
+    marginTop: 6,
+  },
+
+  search: {
+    marginHorizontal: 16,
+    marginBottom: 12,
+    padding: 14,
+    borderRadius: 14,
+    backgroundColor: '#111827',
+    color: 'white',
+  },
+
+  toggles: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 8,
+    marginBottom: 10,
+  },
+
+  toggle: {
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    borderRadius: 14,
+    backgroundColor: '#1f2937',
+  },
+
+  toggleActive: { backgroundColor: '#ec4899' },
+  toggleText: { color: 'white', fontWeight: '700' },
+
+  horrorTxt: {
+    textAlign: 'center',
+    marginBottom: 12,
+    color: '#f87171',
+    fontWeight: '800',
+  },
+
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingHorizontal: 8,
+  },
+
+  star: {
+    position: 'absolute',
+    right: 10,
+    top: 10,
+  },
+
+  'new-year': {
+    height: 175,
+    width: 400,
+    top: 10,
+    alignSelf: 'center',
+  },
 });
