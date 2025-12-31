@@ -62,7 +62,7 @@ const config: Config = {
           label: 'Tutorial',
         },
         {
-          href: 'https://github.com/sparkly-games/main-site',
+          href: 'https://github.com/sparkly-games',
           label: 'GitHub',
           position: 'right',
         },

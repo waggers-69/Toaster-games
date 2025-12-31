@@ -8,9 +8,8 @@ import {
   Pressable,
   Animated,
 } from 'react-native';
-import { useEffect, useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { router } from 'expo-router';
-import React from 'react';
 
 export default function Home() {
   const floatAnim = useRef(new Animated.Value(0)).current;
@@ -48,7 +47,7 @@ export default function Home() {
             <View style={{width: 15}} />
 
           <View style={styles.nav}>
-            <Text style={[styles.navItem, styles.navMuted]} onPress={() => router.push('/docs')}>Docs</Text>
+            <Text style={[styles.navItem, styles.navMuted]} onPress={() => window.location.href = '/docs'}>Docs</Text>
           </View>
         </View>
       </View>
@@ -79,14 +78,14 @@ export default function Home() {
           <View style={styles.buttons}>
             <Pressable
               style={styles.primaryButton}
-              onPress={() => router.push('/play/')}
+              onPress={() => router.push('/play')}
             >
               <Text style={styles.primaryText}>START PLAYING →</Text>
             </Pressable>
 
             <Pressable
               style={styles.secondaryButton}
-              onPress={() => router.push('/sparkly-dev')}
+              onPress={() => window.location.href = '/sparkly-dev'}
             >
               <Text style={styles.secondaryText}>sparkly.dev</Text>
             </Pressable>
