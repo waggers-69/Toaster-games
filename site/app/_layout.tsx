@@ -11,6 +11,7 @@ const HeaderLogo = () => (
     style={styles.headerImage}
     source={LogoImageSource}
     resizeMode="contain"
+    onPress={() => router.push('/')}
   />
 );
 
@@ -18,22 +19,7 @@ export default function RootLayout() {
   return (
     <Stack
       screenOptions={({ route }) => ({
-        headerLeft: () => (
-          <Text style={styles.iconTxt} onPress={() => router.push('/play')}>
-            ⌂
-          </Text>
-        ),
-        headerTitleAlign: 'center',
-        headerStyle: { backgroundColor: 'rgba(69,69,69,1)' },
-        headerTitleStyle: { color: 'white' },
-        headerRight: () => (
-          <>
-            <SparxHeaderButton />
-            <TeamsHeaderButton />
-          </>
-        ),
-        headerTitle: route.name === 'play' ? HeaderLogo : undefined,
-        headerShown: route.name === 'index' ? false : true,
+        headerShown: route.name == 'vids' || route.name.substring(0, 10) == 'vidplayer/' ? true : false,
       })}
     />
   );

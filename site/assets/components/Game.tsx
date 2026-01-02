@@ -1,23 +1,33 @@
 import React from 'react';
 import { Text, Image, StyleSheet, TouchableOpacity, ImageSourcePropType, View } from 'react-native';
-import { gameIcons } from '@/assets/images/GameIcons';
 import { decorIcons } from '@/assets/images/DecorIcons';
+import { gameIcons } from '@/assets/data/GameIcons';
 
 type DecorEvent = 'halloween' | 'christmas' | 'easter' | 'stpatricks';
 
 interface GameProps {
   name: string;
-  imageSource: keyof typeof gameIcons;
+  imageSource: string;          // key for gameIcons map
   onPress: () => void;
   decor?: DecorEvent;
-  newUntil?: number; // YYMMDDHH format
-  pcOnly?: boolean,
-  customBadge?: string,
-  fixed?: boolean ,
-  bugged?: boolean ,
+  newUntil?: number;            // YYMMDDHH format
+  pcOnly?: boolean;
+  customBadge?: string;
+  fixed?: boolean;
+  bugged?: boolean;
 }
 
-export function Game({ name, imageSource, onPress, decor, newUntil, pcOnly, fixed, bugged, customBadge }: GameProps) {
+export function Game({
+  name,
+  imageSource,
+  onPress,
+  decor,
+  newUntil,
+  pcOnly,
+  fixed,
+  bugged,
+  customBadge
+}: GameProps) {
   const icon: ImageSourcePropType = gameIcons[imageSource];
   let decorIcon: ImageSourcePropType | null = null;
 
@@ -28,11 +38,11 @@ export function Game({ name, imageSource, onPress, decor, newUntil, pcOnly, fixe
   }
 
   if (!icon) {
-    console.error(`Error: No image source found for game name "${name}"`);
+    console.error(`Error: No image source found for game "${name}" (key: "${imageSource}")`);
     return null;
   }
 
-  // Determine if badge should show
+  // Determine if "New" badge should show
   const showBadge = (() => {
     if (!newUntil) return false;
 
@@ -44,7 +54,6 @@ export function Game({ name, imageSource, onPress, decor, newUntil, pcOnly, fixe
     const expireTime = new Date(year, month, day, hour).getTime();
     return Date.now() < expireTime;
   })();
-  const showPcBadge = pcOnly;
 
   return (
     <View style={{ position: 'relative', margin: 5 }}>
@@ -53,10 +62,12 @@ export function Game({ name, imageSource, onPress, decor, newUntil, pcOnly, fixe
         <View style={styles.imageWrapper}>
           <Image source={icon} style={styles.image} />
         </View>
+
         {fixed && <Text style={styles.pcBadge}>Updated!</Text>}
         {showBadge && <Text style={styles.newBadge}>New!</Text>}
-        {bugged && <Text style={[styles.pcBadge]}>&#x1f41c; Bugged</Text>}
-        {customBadge && <Text style={[styles.pcBadge]}>{customBadge}</Text>}
+        {bugged && <Text style={styles.pcBadge}>&#x1f41c; Bugged</Text>}
+        {customBadge && <Text style={styles.pcBadge}>{customBadge}</Text>}
+
         <Text style={styles.text}>{name}</Text>
       </TouchableOpacity>
     </View>
