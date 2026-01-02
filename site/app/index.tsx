@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import React, { useRef, useEffect } from 'react';
 import { router } from 'expo-router';
+import Head from 'expo-router/head';
 
 export default function Home() {
   const floatAnim = useRef(new Animated.Value(0)).current;
@@ -33,7 +34,10 @@ export default function Home() {
 
   return (
     <View style={styles.root}>
-
+      <Head>
+          <title>Sparkly Games</title>
+          <meta name="description" content="With Sparkly, get ready to game into the future. With a huge catalog of games to choose from, and even more to come, we hope you never get bored. With no ads and more games every other day, you'll never be bored!" />
+      </Head>
       {/* Header */}
       <View style={styles.header}>
         <View style={styles.headerInner}>

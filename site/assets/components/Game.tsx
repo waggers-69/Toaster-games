@@ -1,5 +1,13 @@
-import React from 'react';
-import { Text, Image, StyleSheet, TouchableOpacity, ImageSourcePropType, View } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import {
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  ImageSourcePropType,
+  View,
+  Animated,
+} from 'react-native';
 import { decorIcons } from '@/assets/images/DecorIcons';
 import { gameIcons } from '@/assets/data/GameIcons';
 
@@ -7,14 +15,11 @@ type DecorEvent = 'halloween' | 'christmas' | 'easter' | 'stpatricks';
 
 interface GameProps {
   name: string;
-  imageSource: string;          // key for gameIcons map
+  imageSource: string; // key for gameIcons map
   onPress: () => void;
   decor?: DecorEvent;
-  newUntil?: number;            // YYMMDDHH format
+  newUntil?: number; // YYMMDDHH format
   pcOnly?: boolean;
-  customBadge?: string;
-  fixed?: boolean;
-  bugged?: boolean;
 }
 
 export function Game({
@@ -24,12 +29,47 @@ export function Game({
   decor,
   newUntil,
   pcOnly,
-  fixed,
-  bugged,
-  customBadge
 }: GameProps) {
   const icon: ImageSourcePropType = gameIcons[imageSource];
   let decorIcon: ImageSourcePropType | null = null;
+
+  /** 🏆 Awards (Top 10) */
+  const awards: Record<string, string> = {
+    ad: '🎖️ 2025',
+    '6': '🥇 2025',
+    a: '🥈 2025',
+    '1': '🥉 2025',
+    x: '🎖️ 2025',
+    c: '🎖️ 2025',
+    ag: '🎖️ 2025',
+    p: '🎖️ 2025',
+    '8': '🎖️ 2025',
+    l: '🎖️ 2025',
+  };
+
+  const awardBadge = awards[imageSource] ?? null;
+
+  /** ✨ Badge animation */
+  const pulseAnim = useRef(new Animated.Value(1)).current;
+
+  useEffect(() => {
+    if (!awardBadge) return;
+
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(pulseAnim, {
+          toValue: 1.1,
+          duration: 900,
+          useNativeDriver: true,
+        }),
+        Animated.timing(pulseAnim, {
+          toValue: 1,
+          duration: 900,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+  }, [awardBadge]);
 
   // Pick random decor if specified
   if (decor && decorIcons[decor]) {
@@ -38,16 +78,18 @@ export function Game({
   }
 
   if (!icon) {
-    console.error(`Error: No image source found for game "${name}" (key: "${imageSource}")`);
+    console.error(
+      `Error: No image source found for game "${name}" (key: "${imageSource}")`
+    );
     return null;
   }
 
   // Determine if "New" badge should show
-  const showBadge = (() => {
+  const showNewBadge = (() => {
     if (!newUntil) return false;
 
     const year = 2000 + Math.floor(newUntil / 1000000);
-    const month = Math.floor((newUntil % 1000000) / 10000) - 1; // JS months 0-11
+    const month = Math.floor((newUntil % 1000000) / 10000) - 1;
     const day = Math.floor((newUntil % 10000) / 100);
     const hour = newUntil % 100;
 
@@ -58,15 +100,30 @@ export function Game({
   return (
     <View style={{ position: 'relative', margin: 5 }}>
       {decorIcon && <Image source={decorIcon} style={styles.decor} />}
+
       <TouchableOpacity onPress={onPress} style={styles.card}>
         <View style={styles.imageWrapper}>
           <Image source={icon} style={styles.image} />
-        </View>
 
-        {fixed && <Text style={styles.pcBadge}>Updated!</Text>}
-        {showBadge && <Text style={styles.newBadge}>New!</Text>}
-        {bugged && <Text style={styles.pcBadge}>&#x1f41c; Bugged</Text>}
-        {customBadge && <Text style={styles.pcBadge}>{customBadge}</Text>}
+          {awardBadge && (
+            <Animated.View
+              style={[
+                styles.awardBadge,
+                { transform: [{ scale: pulseAnim }] },
+              ]}
+            >
+              <Text style={styles.awardText}>{awardBadge}</Text>
+            </Animated.View>
+          )}
+
+          {showNewBadge && (
+            <Text style={styles.newBadge}>NEW</Text>
+          )}
+
+          {pcOnly && (
+            <Text style={styles.pcBadge}>PC</Text>
+          )}
+        </View>
 
         <Text style={styles.text}>{name}</Text>
       </TouchableOpacity>
@@ -111,30 +168,45 @@ const styles = StyleSheet.create({
   },
   newBadge: {
     position: 'absolute',
-    top: 7.5,
-    right: 10,
-    backgroundColor: '#F6C90E',
+    top: 7,
+    right: 7,
+    backgroundColor: '#00d084',
     color: 'white',
-    fontWeight: '600',
+    fontWeight: '700',
     fontSize: 10,
     paddingVertical: 2,
     paddingHorizontal: 6,
     borderRadius: 6,
     textTransform: 'uppercase',
-    zIndex: 10,
+    zIndex: 20,
   },
   pcBadge: {
     position: 'absolute',
-    top: 7.5,
-    left: 10,
-    backgroundColor: '#F6C90E',
+    top: 7,
+    left: 7,
+    backgroundColor: '#4b9eff',
     color: 'white',
-    fontWeight: '600',
+    fontWeight: '700',
     fontSize: 10,
     paddingVertical: 2,
     paddingHorizontal: 6,
     borderRadius: 6,
     textTransform: 'uppercase',
-    zIndex: 10,
+    zIndex: 20,
+  },
+  awardBadge: {
+    position: 'absolute',
+    bottom: 6,
+    right: 6,
+    backgroundColor: '#cbcbcbff',
+    paddingVertical: 3,
+    paddingHorizontal: 6,
+    borderRadius: 8,
+    zIndex: 30,
+  },
+  awardText: {
+    fontSize: 10,
+    fontWeight: '800',
+    color: '#2a2a2a',
   },
 });
