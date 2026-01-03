@@ -104,7 +104,7 @@ export function Game({
       <TouchableOpacity onPress={onPress} style={styles.card}>
         <View style={styles.imageWrapper}>
           <Image source={icon} style={styles.image} />
-
+        </View>
           {awardBadge && (
             <Animated.View
               style={[
@@ -115,16 +115,6 @@ export function Game({
               <Text style={styles.awardText}>{awardBadge}</Text>
             </Animated.View>
           )}
-
-          {showNewBadge && (
-            <Text style={styles.newBadge}>NEW</Text>
-          )}
-
-          {pcOnly && (
-            <Text style={styles.pcBadge}>PC</Text>
-          )}
-        </View>
-
         <Text style={styles.text}>{name}</Text>
       </TouchableOpacity>
     </View>
@@ -196,8 +186,8 @@ const styles = StyleSheet.create({
   },
   awardBadge: {
     position: 'absolute',
-    bottom: 6,
-    right: 6,
+    bottom: 15,
+    right: 15,
     backgroundColor: '#cbcbcbff',
     paddingVertical: 3,
     paddingHorizontal: 6,

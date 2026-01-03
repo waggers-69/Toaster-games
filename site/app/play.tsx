@@ -116,7 +116,7 @@ export default function HomeScreen() {
         {/* Sparkly Games Header */}
         <Animated.View style={[styles.noticeBox, { transform: [{ translateY: floatAnim }] }]}>
           <Text style={styles.noticeTitle}>✨ Sparkly Games ✨</Text>
-          <Text style={styles.noticeText}>v6.9.8 · 02/01/26</Text>
+          <Text style={styles.noticeText}>v6.9.89 · 03/01/26</Text>
           <Text style={styles.noticeText}>Search · Favourites · Recent · A–Z</Text>
         </Animated.View>
 

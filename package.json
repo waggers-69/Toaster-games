@@ -6,6 +6,7 @@
         "docs"
     ],
     "scripts": {
-        "export": "sh ./export.sh"
+        "export": "sh ./export.sh",
+        "start": "cd site && npm start"
     }
 }
