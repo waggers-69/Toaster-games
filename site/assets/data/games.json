@@ -21,7 +21,7 @@
   {"name": "Five Nights at Freddy’s 3", "img": "ai", "url": "/fnaf/FNAF3/", "horror": true},
   {"name": "Geometry Dash 3D", "img": "o", "url": "/gd3d/"},
   {"name": "Geometry Dash Wave", "img": "x", "url": "/gd-wave/"},
-  {"name": "Geometry Dash Wave 3D", "img": "x", "url": "/wave3d/"},
+  {"name": "Wave Road 3D", "img": "av", "url": "/wave3d/"},
   {"name": "Gobble", "img": "r", "url": "/gobble/"},
   {"name": "Google Games Baseball", "img": "y", "url": "/baseball/"},
   {"name": "Google Games Cricket", "img": "z", "url": "/cricket17/"},
@@ -53,5 +53,10 @@
   {"name": "X3M Winter", "img": "0", "url": "/x3m/"},
   {"name": "Drift Boss", "img": "u", "url": "/drift-boss/"},
   {"name": "Pizza Making", "img": "aq", "url": "/pizza.html"},
-  {"name": "Swoop", "img": "ap", "url": "/SWOOOP.html"}
+  {"name": "Stealing the Diamond", "img": "at", "url": "/stickmin/stealingthediamond/"},
+  {"name": "Escaping the Prison", "img": "ar", "url": "/stickmin/escapingtheprison/"},
+  {"name": "Fleeing the Complex", "img": "as", "url": "/stickmin/fleeingthecomplex/"},
+  {"name": "Infiltrating the Airship", "img": "au", "url": "/stickmin/infiltratingtheairship/"},
+  {"name": "Swoop", "img": "ap", "url": "/SWOOOP.html"},
+  {"name": "Jetpack Joyride", "img": "aw", "url": "/jetpack-joyride/"}
 ]

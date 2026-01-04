@@ -23,6 +23,12 @@ const LS_FAVS = 'sparkly:favs';
 const LS_RECENT = 'sparkly:recent';
 
 export default function HomeScreen() {
+  const bazinga = () => {
+    var audio = new Audio('bazinga.mp3');
+    audio.loop = true;
+    audio.play();
+    alert('Bazinga!');
+  }
   const { width, height } = useWindowDimensions();
   const router = useRouter();
 
@@ -116,8 +122,8 @@ export default function HomeScreen() {
         {/* Sparkly Games Header */}
         <Animated.View style={[styles.noticeBox, { transform: [{ translateY: floatAnim }] }]}>
           <Text style={styles.noticeTitle}>✨ Sparkly Games ✨</Text>
-          <Text style={styles.noticeText}>v6.9.89 · 03/01/26</Text>
-          <Text style={styles.noticeText}>Search · Favourites · Recent · A–Z</Text>
+          <Text style={[styles.noticeText, {fontWeight: 'bold'}]}>Officially joining the UBGU (Unblocked Games Union)!</Text>
+          <Text style={styles.noticeText}>v6.9.9 · 03/01/26</Text>
         </Animated.View>
 
         <TextInput
@@ -215,6 +221,12 @@ export default function HomeScreen() {
           size={28}
           color="white"
           onPress={() => router.push('/vids')}
+        />
+        <Ionicons
+          name="logo-electron"
+          size={28}
+          color="white"
+          onPress={() => bazinga()}
         />
       </View>
     </View>
