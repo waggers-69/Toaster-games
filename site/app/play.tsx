@@ -25,6 +25,7 @@ const LS_RECENT = 'sparkly:recent';
 export default function HomeScreen() {
   const bazinga = () => {
     var audio = new Audio('bazinga.mp3');
+    audio.playbackRate = Math.random();
     audio.loop = true;
     audio.play();
     alert('Bazinga!');
@@ -123,14 +124,13 @@ export default function HomeScreen() {
         <Animated.View style={[styles.noticeBox, { transform: [{ translateY: floatAnim }] }]}>
           <Text style={styles.noticeTitle}>✨ Sparkly Games ✨</Text>
           <Text style={[styles.noticeText, {fontWeight: 'bold'}]}>Officially joining the UBGU (Unblocked Games Union)!</Text>
-          <Text style={styles.noticeText}>v6.9.9 · 03/01/26</Text>
+          <Text style={styles.noticeText}>v7.0.0 · 05/01/26</Text>
         </Animated.View>
 
         <TextInput
           value={query}
           onChangeText={setQuery}
           placeholder="Search games…"
-          placeholderTextColor="#9ca3af"
           style={styles.search}
         />
 
@@ -209,25 +209,42 @@ export default function HomeScreen() {
       </Modal>
 
       {/* Social Icons Vertical */}
-      <View style={styles.socials}>
-        <Ionicons
-          name="logo-octocat"
-          size={28}
-          color="white"
+      <View style={styles.socialsContainer}>
+        {/* GitHub */}
+        <TouchableOpacity 
+          style={styles.socialRow} 
           onPress={() => Linking.openURL('https://github.com/sparkly-games')}
-        />
-        <Ionicons
-          name="logo-youtube"
-          size={28}
-          color="white"
+        >
+          <Text style={styles.socialText}>GitHub</Text>
+          <Ionicons name="logo-octocat" size={24} color="white" />
+        </TouchableOpacity>
+
+        {/* YouTube */}
+        <TouchableOpacity 
+          style={styles.socialRow} 
           onPress={() => router.push('/vids')}
-        />
-        <Ionicons
-          name="logo-electron"
-          size={28}
-          color="white"
+        >
+          <Text style={styles.socialText}>Videos</Text>
+          <Ionicons name="logo-youtube" size={24} color="white" />
+        </TouchableOpacity>
+
+        {/* Bazinga / Electron */}
+        <TouchableOpacity 
+          style={styles.socialRow} 
           onPress={() => bazinga()}
-        />
+        >
+          <Text style={styles.socialText}>Bazinga</Text>
+          <Ionicons name="logo-electron" size={24} color="white" />
+        </TouchableOpacity>
+
+        {/* Legacy UI */}
+        <TouchableOpacity 
+          style={styles.socialRow} 
+          onPress={() => router.push('/legacy.ux')}
+        >
+          <Text style={[styles.socialText, { color: '#facc15' }]}>Legacy UI</Text>
+          <Ionicons name="archive-outline" size={24} color="#facc15" />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -300,5 +317,26 @@ const styles = StyleSheet.create({
     top: 80,
     flexDirection: 'column',
     gap: 12,
+  },
+  socialsContainer: {
+    position: 'absolute',
+    right: 20,
+    top: 100, // Adjust based on your header height
+    gap: 15,
+    alignItems: 'flex-end', // Keeps everything aligned to the right edge
+  },
+  socialRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255,255,255,0.05)', // Subtle background for the "button" feel
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 10,
+    gap: 10, // Space between icon and text
+  },
+  socialText: {
+    color: 'white',
+    fontSize: 14,
+    fontWeight: '600',
   },
 });

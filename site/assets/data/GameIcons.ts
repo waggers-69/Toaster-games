@@ -60,4 +60,6 @@ export const gameIcons = {
   "au": require("../icons/au.jpg"),
   "av": require("../icons/av.jpg"),
   "aw": require("../icons/aw.jpg"),
+  "ay": require("../icons/ay.png"),
+  "ax": require("../icons/ax.jpg"),
 };

@@ -11,7 +11,7 @@ import {
 import { decorIcons } from '@/assets/images/DecorIcons';
 import { gameIcons } from '@/assets/data/GameIcons';
 
-type DecorEvent = 'halloween' | 'christmas' | 'easter' | 'stpatricks';
+type DecorEvent = 'halloween' | 'christmas' | 'easter' | 'stpatricks' | 'new-year';
 
 interface GameProps {
   name: string;
@@ -20,6 +20,7 @@ interface GameProps {
   decor?: DecorEvent;
   newUntil?: number; // YYMMDDHH format
   pcOnly?: boolean;
+  legacy?: boolean;
 }
 
 export function Game({
@@ -29,6 +30,7 @@ export function Game({
   decor,
   newUntil,
   pcOnly,
+  legacy,
 }: GameProps) {
   const icon: ImageSourcePropType = gameIcons[imageSource];
   let decorIcon: ImageSourcePropType | null = null;
@@ -48,8 +50,6 @@ export function Game({
   };
 
   const awardBadge = awards[imageSource] ?? null;
-
-  /** ✨ Badge animation */
   const pulseAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
@@ -57,42 +57,27 @@ export function Game({
 
     Animated.loop(
       Animated.sequence([
-        Animated.timing(pulseAnim, {
-          toValue: 1.1,
-          duration: 900,
-          useNativeDriver: true,
-        }),
-        Animated.timing(pulseAnim, {
-          toValue: 1,
-          duration: 900,
-          useNativeDriver: true,
-        }),
+        Animated.timing(pulseAnim, { toValue: 1.1, duration: 900, useNativeDriver: true }),
+        Animated.timing(pulseAnim, { toValue: 1, duration: 900, useNativeDriver: true }),
       ])
     ).start();
   }, [awardBadge]);
 
-  // Pick random decor if specified
+  // Handle Decor Logic
   if (decor && decorIcons[decor]) {
     const options = decorIcons[decor];
     decorIcon = options[Math.floor(Math.random() * options.length)];
   }
 
-  if (!icon) {
-    console.error(
-      `Error: No image source found for game "${name}" (key: "${imageSource}")`
-    );
-    return null;
-  }
+  if (!icon) return null;
 
-  // Determine if "New" badge should show
+  // Badge Logic
   const showNewBadge = (() => {
     if (!newUntil) return false;
-
     const year = 2000 + Math.floor(newUntil / 1000000);
     const month = Math.floor((newUntil % 1000000) / 10000) - 1;
     const day = Math.floor((newUntil % 10000) / 100);
     const hour = newUntil % 100;
-
     const expireTime = new Date(year, month, day, hour).getTime();
     return Date.now() < expireTime;
   })();
@@ -105,7 +90,16 @@ export function Game({
         <View style={styles.imageWrapper}>
           <Image source={icon} style={styles.image} />
         </View>
-          {awardBadge && (
+          {/* Status Badges */}
+          {showNewBadge && (
+            <Text style={styles.newBadge}>NEW</Text>
+          )}
+          {pcOnly && (
+            <Text style={styles.pcBadge}>PC</Text>
+          )}
+
+          {/* Award Badge: Logic Fixed Here */}
+          {!legacy && awardBadge && (
             <Animated.View
               style={[
                 styles.awardBadge,
@@ -115,7 +109,7 @@ export function Game({
               <Text style={styles.awardText}>{awardBadge}</Text>
             </Animated.View>
           )}
-        <Text style={styles.text}>{name}</Text>
+        <Text style={styles.text} numberOfLines={1}>{name}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -123,15 +117,11 @@ export function Game({
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: 'rgb(56,59,58)',
+    backgroundColor: '#383b3a', // Hex equivalent of your rgb
     borderRadius: 24,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    elevation: 8,
     alignItems: 'center',
     padding: 10,
+    // Note: Elevation/Shadow only works if container has a background
   },
   imageWrapper: {
     position: 'relative',
@@ -139,64 +129,67 @@ const styles = StyleSheet.create({
   image: {
     width: 120,
     height: 120,
-    borderRadius: 24,
+    borderRadius: 20,
   },
   decor: {
     position: 'absolute',
-    top: -10,
-    right: -10,
-    width: 40,
-    height: 40,
+    top: -8,
+    right: -8,
+    width: 35,
+    height: 35,
     zIndex: 300,
   },
   text: {
-    marginTop: 10,
+    marginTop: 8,
     fontSize: 10,
     color: 'white',
     fontWeight: 'bold',
-    textTransform: 'capitalize',
+    textAlign: 'center',
+    width: 120,
   },
   newBadge: {
     position: 'absolute',
-    top: 7,
-    right: 7,
+    top: 5,
+    right: 5,
     backgroundColor: '#00d084',
     color: 'white',
-    fontWeight: '700',
-    fontSize: 10,
+    fontWeight: '800',
+    fontSize: 9,
     paddingVertical: 2,
     paddingHorizontal: 6,
     borderRadius: 6,
-    textTransform: 'uppercase',
     zIndex: 20,
+    overflow: 'hidden',
   },
   pcBadge: {
     position: 'absolute',
-    top: 7,
-    left: 7,
+    top: 5,
+    left: 5,
     backgroundColor: '#4b9eff',
     color: 'white',
-    fontWeight: '700',
-    fontSize: 10,
+    fontWeight: '800',
+    fontSize: 9,
     paddingVertical: 2,
     paddingHorizontal: 6,
     borderRadius: 6,
-    textTransform: 'uppercase',
     zIndex: 20,
+    overflow: 'hidden',
   },
   awardBadge: {
     position: 'absolute',
-    bottom: 15,
-    right: 15,
-    backgroundColor: '#cbcbcbff',
+    bottom: 10,
+    right: 10,
+    backgroundColor: '#cbcbcb',
     paddingVertical: 3,
     paddingHorizontal: 6,
     borderRadius: 8,
     zIndex: 30,
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.1)',
   },
   awardText: {
-    fontSize: 10,
-    fontWeight: '800',
+    fontSize: 9,
+    fontWeight: '900',
     color: '#2a2a2a',
   },
 });

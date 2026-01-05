@@ -4,61 +4,90 @@ sidebar_position: 1
 
 # Quick Start
 
-Prerequisites:
-  - A SparklyDev account
-  - [Node.js](https://nodejs.org) and [npm](https://npmjs.org).
-  - Approximately 15 gigabytes of free space
-  - A game idea.
-  - A [GitHub](https://github.com) account.
+## Prerequisites
+
+- A [SparklyDev](/sparkly-dev/) account
+- [Node.js](https://nodejs.org) and [npm](https://npmjs.org)
+- ~15 GB of free disk space
+- A game idea
+- A [GitHub](https://github.com) account
+
+---
 
 ## Getting Started
 
-1. Ensure you have Visual Studio Code (or a similar code editor) installed.
-2. Open a terminal and run the following command:
-  ```bash title="root@my-pc.local ~"
-  npm create sparkly-pkg -- "my-game"
-  ```
-3. You might be asked to login to your account in your browser. Authorise `@sparkly.dev/cli` or it won't work.
+1. Install Visual Studio Code (or another code editor).
+2. Open a terminal and run:
 
-:::::warning Make sure to read this!
+```bash title="root@my-pc.local ~"
+npm create sparkly-pkg -- "my-game"
+```
 
-If the official package is infected, we will stop the package from being able to authenticate to your account. We will remove ALL tokens, which means when it comes back, you will need to log back in (to reset account tokens). 
+3. You may be prompted to sign in via your browser.  
+   Make sure you **authorise `@sparkly.dev/cli`**, otherwise the CLI will not function.
 
-:::danger Be careful!
+---
 
-If you authorise a package without the `Official Sparkly Product` tag, someone may be able to steal your account. If you suspect your account has been stolen, contact SparklyDev support immediately. Make sure to unauthorise any packages you don't recognise. When we recieve your email, your account will be put into `Safe Mode` and you will be unable to upload new games until we get to fixing your case. Any games modified in the last 28 days will be temporarily unavailable to stop any of your audience getting their devices infected.
+:::warning Security notice
 
-::::
-:::info Reach out for support
+If an **official Sparkly package** is ever found to be compromised, we may temporarily disable authentication for that package and revoke associated tokens as a precaution. When access is restored, you’ll simply need to log in again to re-issue tokens.
 
-Email: hijack@sparkly.creepers.sbs
-
+This is done to protect both developers and players.
 :::
-:::::
 
-4. You will be presented with a project preset for a game application. It will have mock API endpoints, such as `/api/isMonetised` and `/api/isAdSupported`.
-5. Drop your game in the `public` folder and create new API endpoints in `api.js`.
+:::danger Third-party packages
 
-## Testing your Game.
+Only authorise packages marked with the **“Official Sparkly Product”** tag.
 
-1. Navigate to your project directory (in our case, `my-game`):
+Authorising unverified packages may expose your account. If you believe your account has been compromised:
+- Revoke any unfamiliar authorisations
+- Contact SparklyDev support immediately
+
+As a safety measure, affected accounts may temporarily enter **Safe Mode**, disabling new uploads until the issue is resolved.
+:::
+
+:::info Need help?
+
+Email: **hijack@sparkly.creepers.sbs**
+:::
+
+---
+
+4. After setup, you’ll receive a project preset with mock API endpoints such as:
+   - `/api/isMonetised`
+   - `/api/isAdSupported`
+
+5. Place your game files in the `public` folder and add new API endpoints in `api.js`.
+
+---
+
+## Testing Your Game
+
+1. Navigate to your project directory:
+
 ```bash title="root@my-pc.local ~"
 cd my-game
 ```
 
-2. If the packages are not already installed, run:
+2. Install dependencies (if needed):
+
 ```bash title="root@my-pc.local my-game"
 npm install
 ```
 
-3. Ensure the app is correctly setup with:
+3. Verify the project structure:
+
 ```bash title="root@my-pc.local my-game"
-npm run struct-chck -- "error"
+npm run struct-chck
 ```
 
-4. And finally, run:
+4. Start the development server:
+
 ```bash title="root@my-pc.local my-game"
 npm start
 ```
 
-You have successfully created your first game with the Sparkly Games API!
+---
+
+🎉 **That’s it!**  
+You’ve successfully created your first game using the Sparkly Games API.

@@ -58,5 +58,7 @@
   {"name": "Fleeing the Complex", "img": "as", "url": "/stickmin/fleeingthecomplex/"},
   {"name": "Infiltrating the Airship", "img": "au", "url": "/stickmin/infiltratingtheairship/"},
   {"name": "Swoop", "img": "ap", "url": "/SWOOOP.html"},
-  {"name": "Jetpack Joyride", "img": "aw", "url": "/jetpack-joyride/"}
+  {"name": "Jetpack Joyride", "img": "aw", "url": "/jetpack-joyride/"},
+  {"name": "Cut the Rope", "img": "ay", "url": "/ctr/"},
+  {"name": "Stickman Hook", "img": "ax", "url": "/stickman-hook.html"}
 ]

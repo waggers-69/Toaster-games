@@ -1,16 +1,28 @@
-:::tip This experiment was developed by the Sparkly team.
+:::tip
+This experiment was developed by the **Sparkly team**.  
 ID: `@ngrok.uri`
 :::
-:::warning
-Experiments can always be able to break your code. Make sure to create a backup before using the experiment.
-:::
----------
 
-:::note Important
-Ensure to add `experiments: ['@ngrok.uri']` in the `sparkly-config.json` file to enable this feature.
+:::warning
+Experiments can break your code at any time.  
+Always create a backup before enabling experimental features.
 :::
-Start your project as normal, and type :Net in your terminal, which creates an NGROK URL you can test with on multiple devices.
-It should look like this:
+
+---
+
+:::note
+Add the following to your `sparkly-config.json` file:
+
+```json
+{
+  "experiments": ["@ngrok.uri"]
+}
+```
+:::
+
+Start your project as normal, then type `:Net` in your terminal to expose your local server via NGROK.
+
+Example output:
 
 ```log title="root@my-pc.local my-game"
 npm start
@@ -35,15 +47,18 @@ Net
 [INFO] Exposing to NGROK...
 
 URL: https://my-game.ngrok.app
-
 ```
+
+---
 
 ## Information
 
-:::danger This is an experimental feature, so do not rely on it. It can be removed in future updates.
-:::
+:::danger
+This is an **experimental feature** and may be removed or changed without notice.  
+Do **not** rely on it for long-term workflows.
 
-:::warning
-This experiment will be ignored in Production builds, even with the `DISABLE_EXPERIMENTS_CHECK_PROD=1` flag.
-Its only use is to aid in development. This does NOT help with any aspects in the Production environment. It may be a security vulnerability in Production, so it is ignored.
+This experiment is **always ignored in Production builds**, even if
+`DISABLE_EXPERIMENTS_CHECK_PROD=1` is set.
+
+It exists solely to aid local development and may introduce security risks in Production environments.
 :::

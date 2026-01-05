@@ -66,17 +66,18 @@ export default function Home() {
             ]}
           >
             <View style={styles.pingDot} />
-            <Text style={styles.badgeText}>Version 7 coming soon.</Text>
+            <Text style={styles.badgeText}>Version 7 out now!</Text>
           </Animated.View>
 
           <Text style={styles.title}>
-            UNLEASH THE{'\n'}
-            <Text style={styles.gradientText}>MAGIC WITHIN.</Text>
+            EMBRACE THE{'\n'}
+            <Text style={styles.gradientText}>GAMER WITHIN</Text>
           </Text>
 
           <Text style={styles.subtitle}>
             Experience the next generation of social gaming. Built for creators,
-            players, and everyone who loves a little bit of glitter.
+            players, and dreamers alike. Dive into a universe where every game
+            is a new adventure.
           </Text>
 
           <View style={styles.buttons}>
