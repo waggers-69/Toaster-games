@@ -60,5 +60,6 @@
   {"name": "Swoop", "img": "ap", "url": "/SWOOOP.html"},
   {"name": "Jetpack Joyride", "img": "aw", "url": "/jetpack-joyride/"},
   {"name": "Cut the Rope", "img": "ay", "url": "/ctr/"},
-  {"name": "Stickman Hook", "img": "ax", "url": "/stickman-hook.html"}
+  {"name": "Stickman Hook", "img": "ax", "url": "/stickman-hook.html"},
+  {"name": "Breaking the Bank", "img": "az", "url": "/stickmin/breakingthebank/"}
 ]
