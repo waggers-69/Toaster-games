@@ -152,7 +152,7 @@ export default function HomeScreen() {
           <Text style={[styles.noticeText, { fontWeight: 'bold' }]}>
             Officially joining the UBGU!
           </Text>
-          <Text style={styles.noticeText}>v7.0.3 · 07/01/26</Text>
+          <Text style={styles.noticeText}>v7.0.4 · 08/01/26</Text>
         </Animated.View>
 
         <TextInput
