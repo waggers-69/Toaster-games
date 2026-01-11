@@ -153,7 +153,7 @@ export default function HomeScreen() {
           <Text style={[styles.noticeText, { fontWeight: 'bold' }]}>
             Officially joining the UBGU!
           </Text>
-          <Text style={styles.noticeText}>v7.0.9 · 11/01/26</Text>
+          <Text style={styles.noticeText}>v7.1.1 · 11/01/26</Text>
         </Animated.View>
 
         <TextInput
@@ -182,29 +182,60 @@ export default function HomeScreen() {
             {showHorror ? 'Hide Horror' : 'Show Horror'}
           </Text>
         </TouchableOpacity>
-
+        <Text style={{ color: '#ffffff', textAlign: 'center', marginBottom: 12, fontSize: '1.25em', fontWeight: '800' }}>
+          Leaving Soon
+        </Text>
         <View style={styles.grid}>
-          {games.map(game => (
-            <View key={game.name} style={{ width: itemWidth }}>
-              <Game
-                name={game.name}
-                imageSource={game.img}
-                decor={decal}
-                onPress={() => openGame(game)}
-                leaving={game.leaving}
-              />
-              <TouchableOpacity
-                onPress={() => toggleFav(game.name)}
-                style={styles.star}
-              >
-                <Ionicons
-                  name={favs.includes(game.name) ? 'star' : 'star-outline'}
-                  size={22}
-                  color="#facc15"
+          {games
+            .filter(game => game.leaving)
+            .map(game => (
+              <View key={game.name} style={{ width: itemWidth }}>
+                <Game
+                  name={game.name}
+                  imageSource={game.img}
+                  decor={decal}
+                  onPress={() => openGame(game)}
+                  leaving={game.leaving}
                 />
-              </TouchableOpacity>
-            </View>
-          ))}
+                <TouchableOpacity
+                  onPress={() => toggleFav(game.name)}
+                  style={styles.star}
+                >
+                  <Ionicons
+                    name={favs.includes(game.name) ? 'star' : 'star-outline'}
+                    size={22}
+                    color="#facc15"
+                  />
+                </TouchableOpacity>
+              </View>
+            ))}
+        </View>
+        <Text style={{ color: '#ffffff', textAlign: 'center', marginBottom: 12, fontSize: '1.25em', fontWeight: '800' }}>
+          Games
+        </Text>
+        <View style={styles.grid}>
+          {games
+            .filter(game => !game.leaving)
+            .map(game => (
+              <View key={game.name} style={{ width: itemWidth }}>
+                <Game
+                  name={game.name}
+                  imageSource={game.img}
+                  decor={decal}
+                  onPress={() => openGame(game)}
+                />
+                <TouchableOpacity
+                  onPress={() => toggleFav(game.name)}
+                  style={styles.star}
+                >
+                  <Ionicons
+                    name={favs.includes(game.name) ? 'star' : 'star-outline'}
+                    size={22}
+                    color="#facc15"
+                  />
+                </TouchableOpacity>
+              </View>
+            ))}
         </View>
       </ScrollView>
 
