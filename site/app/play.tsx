@@ -17,6 +17,7 @@ import { useRouter } from 'expo-router';
 import Head from 'expo-router/head';
 import { Game } from '../assets/components/Game';
 import gamesData from '../assets/data/games.json';
+import {analytics} from '@/public/firebaseConfig.js'
 
 const decal = 'new-year';
 const LS_FAVS = 'sparkly:favs';
@@ -152,7 +153,7 @@ export default function HomeScreen() {
           <Text style={[styles.noticeText, { fontWeight: 'bold' }]}>
             Officially joining the UBGU!
           </Text>
-          <Text style={styles.noticeText}>v7.0.4 · 08/01/26</Text>
+          <Text style={styles.noticeText}>v7.0.9 · 11/01/26</Text>
         </Animated.View>
 
         <TextInput
@@ -190,6 +191,7 @@ export default function HomeScreen() {
                 imageSource={game.img}
                 decor={decal}
                 onPress={() => openGame(game)}
+                leaving={game.leaving}
               />
               <TouchableOpacity
                 onPress={() => toggleFav(game.name)}
@@ -265,6 +267,10 @@ export default function HomeScreen() {
           <Text style={[styles.socialText, { color: '#facc15' }]}>Legacy UI</Text>
           <Ionicons name="archive-outline" size={24} color="#facc15" />
         </TouchableOpacity>
+        <TouchableOpacity style={styles.socialRow} onPress={() => window.location.href='/proto-hub.html'}>
+          <Text style={[styles.socialText, { color: '#facc15' }]}>Proto Hub</Text>
+          <Ionicons name="code-download-outline" size={24} color="#facc15" />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -335,7 +341,7 @@ const styles = StyleSheet.create({
   socialsContainer: {
     position: 'absolute',
     right: 20,
-    top: 100,
+    top: 10,
     gap: 15,
     alignItems: 'flex-end',
   },

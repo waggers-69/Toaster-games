@@ -7,9 +7,9 @@
   {"name": "Block Blast", "img": "aa", "url": "/block-blast/"},
   {"name": "Bloons Tower Defence 5", "img": "m", "url": "/btd5.htm"},
   {"name": "Boxing Random", "img": "ab", "url": "/randoms/boxing/"},
-  {"name": "Cookie Clicker", "img": "ao", "url": "/cookieclicker/"},
+  {"name": "Cookie Clicker", "img": "ao", "url": "/cookieclicker/", "leaving": "12th Jan"},
   {"name": "Crazy Crash Landing", "img": "n", "url": "/ccl.htm"},
-  {"name": "Crashy Road", "img": "j", "url": "/crashyroad"},
+  {"name": "Crashy Road", "img": "j", "url": "/crashyroad", "leaving": "12th Jan"},
   {"name": "Darts Pro", "img": "f", "url": "/dartspro/"},
   {"name": "Draw Climber", "img": "g", "url": "/draw-climber/"},
   {"name": "Drive Mad", "img": "9", "url": "/drive-mad/"},
@@ -52,7 +52,7 @@
   {"name": "Wheelie Bike", "img": "l", "url": "/wheelie-bike/"},
   {"name": "X3M Winter", "img": "0", "url": "/x3m/"},
   {"name": "Drift Boss", "img": "u", "url": "/drift-boss/"},
-  {"name": "Pizza Making", "img": "aq", "url": "/pizza.html"},
+  {"name": "Pizza Making", "img": "aq", "url": "/pizza.html", "leaving": "14th Jan"},
   {"name": "Stealing the Diamond", "img": "at", "url": "/stickmin/stealingthediamond/"},
   {"name": "Escaping the Prison", "img": "ar", "url": "/stickmin/escapingtheprison/"},
   {"name": "Fleeing the Complex", "img": "as", "url": "/stickmin/fleeingthecomplex/"},
@@ -61,5 +61,10 @@
   {"name": "Jetpack Joyride", "img": "aw", "url": "/jetpack-joyride/"},
   {"name": "Cut the Rope", "img": "ay", "url": "/ctr/"},
   {"name": "Stickman Hook", "img": "ax", "url": "/stickman-hook.html"},
-  {"name": "Breaking the Bank", "img": "az", "url": "/stickmin/breakingthebank/"}
+  {"name": "Breaking the Bank", "img": "az", "url": "/stickmin/breakingthebank/"},
+  {"name": "Crossy Road", "img": "ba", "url": "/crossy-road.html"},
+  {"name": "Monkey Mart", "img": "bb", "url": "/monkey-mart.html"},
+  {"name": "Draw the Hill", "img": "bc", "url": "/draw-the-hill/"},
+  {"name": "Stickman Archer", "img": "bd", "url": "/stickman-archer.htm"},
+  {"name": "OvO Dimensions", "img": "be", "url": "/ovo-dimensions.html"}
 ]

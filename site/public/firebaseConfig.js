@@ -1,5 +1,6 @@
-import { initializeApp } from "firebase/app";
-import { getAnalytics, logEvent } from "firebase/analytics";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyANQlvPCbx1eDGVNkmK9HenAh0Cw_fD4Bw",
@@ -14,14 +15,17 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 let analytics;
+let auth;
 if (typeof window !== "undefined") {
   analytics = getAnalytics(app);
+  auth = getAuth(app);
 
   // Enable debug mode only on localhost
   if (window.location.hostname === "localhost") {
     localStorage.setItem("firebase:analytics_debug_mode", "true");
     console.log("Firebase debug mode enabled for localhost");
   }
+
 }
 
-export { app, analytics, logEvent };
+export { app, analytics, auth };

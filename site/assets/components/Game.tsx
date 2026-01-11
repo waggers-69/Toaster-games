@@ -21,6 +21,7 @@ interface GameProps {
   newUntil?: number; // YYMMDDHH format
   pcOnly?: boolean;
   legacy?: boolean;
+  leaving?: string;
 }
 
 export function Game({
@@ -31,6 +32,7 @@ export function Game({
   newUntil,
   pcOnly,
   legacy,
+  leaving,
 }: GameProps) {
   const icon: ImageSourcePropType = gameIcons[imageSource];
   let decorIcon: ImageSourcePropType | null = null;
@@ -107,6 +109,16 @@ export function Game({
               ]}
             >
               <Text style={styles.awardText}>{awardBadge}</Text>
+            </Animated.View>
+          )}
+          {!legacy && leaving && (
+            <Animated.View
+              style={[
+                styles.awardBadge,
+                { transform: [{ scale: pulseAnim }] },
+              ]}
+            >
+              <Text style={styles.awardText}>Last day to play: {leaving}</Text>
             </Animated.View>
           )}
         <Text style={styles.text} numberOfLines={1}>{name}</Text>
