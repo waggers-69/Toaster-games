@@ -14,7 +14,7 @@ import {
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Head from 'expo-router/head';
 import { Game } from '../assets/components/Game';
-import gamesData from '../assets/data/games.json';
+import {gamesData} from '../assets/data/games';
 import { router } from 'expo-router';
 
 export default function SparklyUnifiedUI() {

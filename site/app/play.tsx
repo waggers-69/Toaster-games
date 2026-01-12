@@ -16,7 +16,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { useRouter } from 'expo-router';
 import Head from 'expo-router/head';
 import { Game } from '../assets/components/Game';
-import gamesData from '../assets/data/games.json';
+import {gamesData} from '../assets/data/games';
 import {analytics} from '@/public/firebaseConfig.js'
 
 const decal = 'new-year';
@@ -153,7 +153,7 @@ export default function HomeScreen() {
           <Text style={[styles.noticeText, { fontWeight: 'bold' }]}>
             Officially joining the UBGU!
           </Text>
-          <Text style={styles.noticeText}>v7.1.1 · 11/01/26</Text>
+          <Text style={styles.noticeText}>v7.1.3 · 12/01/26</Text>
         </Animated.View>
 
         <TextInput
