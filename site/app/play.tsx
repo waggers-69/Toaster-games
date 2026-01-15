@@ -16,8 +16,9 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { useRouter } from 'expo-router';
 import Head from 'expo-router/head';
 import { Game } from '../assets/components/Game';
-import {gamesData} from '../assets/data/games';
-import {analytics} from '@/public/firebaseConfig.js'
+import { gamesData } from '../assets/data/games';
+import { analytics } from '@/public/firebaseConfig.js';
+import { ChaosImage } from '@/assets/components/ChaosImage';
 
 const decal = 'new-year';
 const LS_FAVS = 'sparkly:favs';
@@ -27,16 +28,41 @@ export default function HomeScreen() {
   const { width } = useWindowDimensions();
   const router = useRouter();
 
-  /* ---------------- Sound Stuff ---------------- */
+  /* ---------------- Bazinga ---------------- */
+  const [bazingaMode, setBazingaMode] = useState(false);
+  const [lang, setLang] = useState<'en' | 'tlh'>('en');
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const bazinga = () => {
-    const audio = new Audio('/bazinga.mp3');
-    audio.playbackRate = Math.random() + Math.random() * 1.25;
-    audio.loop = true;
-    audio.play();
-    alert('Bazinga!');
+  const toggleBazinga = () => {
+    setBazingaMode(prev => {
+      const newMode = !prev;
+
+      if (newMode) {
+        // Turn ON Bazinga
+        if (!audioRef.current) {
+          audioRef.current = new Audio('/bazinga.mp3');
+          audioRef.current.loop = true;
+          audioRef.current.playbackRate = Math.random() + Math.random() * 1.25;
+        }
+        audioRef.current.play();
+      } else {
+        // Turn OFF Bazinga
+        if (audioRef.current) {
+          audioRef.current.pause();
+          audioRef.current.currentTime = 0;
+        }
+      }
+
+      setLang(l => (l === 'en' ? 'tlh' : 'en'));
+      return newMode;
+    });
   };
 
+  // Simple wrapper
+  const bazinga = () => toggleBazinga();
+
+
+  /* ---------------- Soundboard ---------------- */
   const soundboard = () => {
     setModalGame({
       name: 'Soundboard',
@@ -47,18 +73,15 @@ export default function HomeScreen() {
   };
 
   /* ---------------- State ---------------- */
-
   const [query, setQuery] = useState('');
   const [view, setView] = useState<'all' | 'favs' | 'recent'>('all');
   const [favs, setFavs] = useState<string[]>([]);
   const [recent, setRecent] = useState<string[]>([]);
   const [showHorror, setShowHorror] = useState(false);
-
   const [modalGame, setModalGame] = useState<any>(null);
   const [iframeKey, setIframeKey] = useState(0);
 
   /* ---------------- Animations ---------------- */
-
   const floatAnim = useRef(new Animated.Value(0)).current;
   const glowAnim = useRef(new Animated.Value(0.4)).current;
 
@@ -79,7 +102,6 @@ export default function HomeScreen() {
   }, []);
 
   /* ---------------- Local Storage ---------------- */
-
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const f = localStorage.getItem(LS_FAVS);
@@ -90,25 +112,15 @@ export default function HomeScreen() {
 
   const saveFavs = (next: string[]) => {
     setFavs(next);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(LS_FAVS, JSON.stringify(next));
-    }
+    if (typeof window !== 'undefined') localStorage.setItem(LS_FAVS, JSON.stringify(next));
   };
 
   const saveRecent = (next: string[]) => {
     setRecent(next);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(LS_RECENT, JSON.stringify(next));
-    }
+    if (typeof window !== 'undefined') localStorage.setItem(LS_RECENT, JSON.stringify(next));
   };
 
-  const toggleFav = (name: string) => {
-    saveFavs(
-      favs.includes(name)
-        ? favs.filter(f => f !== name)
-        : [...favs, name]
-    );
-  };
+  const toggleFav = (name: string) => saveFavs(favs.includes(name) ? favs.filter(f => f !== name) : [...favs, name]);
 
   const openGame = (game: any) => {
     saveRecent([game.name, ...recent.filter(r => r !== game.name)].slice(0, 12));
@@ -117,52 +129,56 @@ export default function HomeScreen() {
   };
 
   /* ---------------- Filter Games ---------------- */
-
   const games = useMemo(() => {
     let g = gamesData
       .filter(g => showHorror || !g.horror)
-      .filter(g => g.name.toLowerCase().includes(query.toLowerCase()));
+      .filter(g => g.title.en.toLowerCase().includes(query.toLowerCase()));
 
-    if (view === 'favs') g = g.filter(g => favs.includes(g.name));
-    if (view === 'recent') g = g.filter(g => recent.includes(g.name));
+    if (view === 'favs') g = g.filter(g => favs.includes(g.title.en));
+    if (view === 'recent') g = g.filter(g => recent.includes(g.title.en));
 
-    return g.sort((a, b) => a.name.localeCompare(b.name));
+    return g.sort((a, b) => a.title.en.localeCompare(b.title.en));
   }, [query, showHorror, view, favs, recent]);
 
   const columns = width < 420 ? 2 : width < 900 ? 3 : 4;
   const itemWidth = Math.floor((width - 24) / columns);
 
   /* ---------------- Render ---------------- */
-
   return (
     <View style={styles.container}>
       <Head>
         <title>Sparkly Games</title>
       </Head>
 
+      {/* Glow Effect */}
       <Animated.View style={[styles.sparkleGlow, { opacity: glowAnim }]} />
 
-      <Image
+      {/* Atmosphere Decal */}
+      <ChaosImage
         source={require(`../assets/images/decal/${decal}-atmosphere.png`)}
         style={styles[decal]}
+        bazinga={bazingaMode}
       />
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
+        {/* Notice Box */}
         <Animated.View style={[styles.noticeBox, { transform: [{ translateY: floatAnim }] }]}>
           <Text style={styles.noticeTitle}>✨ Sparkly Games ✨</Text>
           <Text style={[styles.noticeText, { fontWeight: 'bold' }]}>
-            Officially joining the UBGU!
+            {bazingaMode ? 'UBGU chut' : 'Officially joining the UBGU!'}
           </Text>
-          <Text style={styles.noticeText}>v7.1.3 · 12/01/26</Text>
+          <Text style={styles.noticeText}>v7.2.0 · 15/01/26</Text>
         </Animated.View>
 
+        {/* Search */}
         <TextInput
           value={query}
           onChangeText={setQuery}
-          placeholder="Search games…"
+          placeholder={bazingaMode ? 'quj nej…' : 'Search games…'}
           style={styles.search}
         />
 
+        {/* Toggles */}
         <View style={styles.toggles}>
           {['all', 'favs', 'recent'].map(v => (
             <TouchableOpacity
@@ -171,75 +187,59 @@ export default function HomeScreen() {
               style={[styles.toggle, view === v && styles.toggleActive]}
             >
               <Text style={styles.toggleText}>
-                {v === 'all' ? 'All' : v === 'favs' ? 'Favourites' : 'Recent'}
+                {v === 'all' ? (bazingaMode ? 'pagh' : 'All') :
+                 v === 'favs' ? (bazingaMode ? 'yInlu' : 'Favourites') :
+                 bazingaMode ? 'QIn' : 'Recent'}
               </Text>
             </TouchableOpacity>
           ))}
         </View>
 
         <TouchableOpacity onPress={() => setShowHorror(!showHorror)}>
-          <Text style={styles.horrorTxt}>
-            {showHorror ? 'Hide Horror' : 'Show Horror'}
-          </Text>
+          <Text style={styles.horrorTxt}>{showHorror ? (bazingaMode ? 'ghItlh Horror' : 'Hide Horror') : (bazingaMode ? 'Qagh Horror' : 'Show Horror')}</Text>
         </TouchableOpacity>
-        <Text style={{ color: '#ffffff', textAlign: 'center', marginBottom: 12, fontSize: '1.25em', fontWeight: '800' }}>
-          Leaving Soon
-        </Text>
+
+        {/* Leaving Soon */}
+        <Text style={styles.sectionTitle}>{bazingaMode ? 'yItlhutlh qet' : 'Leaving Soon'}</Text>
         <View style={styles.grid}>
-          {games
-            .filter(game => game.leaving)
-            .map(game => (
-              <View key={game.name} style={{ width: itemWidth }}>
-                <Game
-                  name={game.name}
-                  imageSource={game.img}
-                  decor={decal}
-                  onPress={() => openGame(game)}
-                  leaving={game.leaving}
-                />
-                <TouchableOpacity
-                  onPress={() => toggleFav(game.name)}
-                  style={styles.star}
-                >
-                  <Ionicons
-                    name={favs.includes(game.name) ? 'star' : 'star-outline'}
-                    size={22}
-                    color="#facc15"
-                  />
-                </TouchableOpacity>
-              </View>
-            ))}
+          {games.filter(game => game.leaving).map(game => (
+            <View key={game.title.en} style={{ width: itemWidth }}>
+              <Game
+                name={bazingaMode ? game.title.tlh ?? game.title.en : game.title.en}
+                imageSource={game.img}
+                decor={decal}
+                leaving={game.leaving}
+                onPress={() => openGame(game)}
+                bazinga={bazingaMode}
+              />
+              <TouchableOpacity onPress={() => toggleFav(game.title.en)} style={styles.star}>
+                <Ionicons name={favs.includes(game.title.en) ? 'star' : 'star-outline'} size={22} color="#facc15" />
+              </TouchableOpacity>
+            </View>
+          ))}
         </View>
-        <Text style={{ color: '#ffffff', textAlign: 'center', marginBottom: 12, fontSize: '1.25em', fontWeight: '800' }}>
-          Games
-        </Text>
+
+        {/* All Games */}
+        <Text style={styles.sectionTitle}>{bazingaMode ? 'Qap' : 'Games'}</Text>
         <View style={styles.grid}>
-          {games
-            .filter(game => !game.leaving)
-            .map(game => (
-              <View key={game.name} style={{ width: itemWidth }}>
-                <Game
-                  name={game.name}
-                  imageSource={game.img}
-                  decor={decal}
-                  onPress={() => openGame(game)}
-                />
-                <TouchableOpacity
-                  onPress={() => toggleFav(game.name)}
-                  style={styles.star}
-                >
-                  <Ionicons
-                    name={favs.includes(game.name) ? 'star' : 'star-outline'}
-                    size={22}
-                    color="#facc15"
-                  />
-                </TouchableOpacity>
-              </View>
-            ))}
+          {games.filter(game => !game.leaving).map(game => (
+            <View key={game.title.en} style={{ width: itemWidth }}>
+              <Game
+                name={bazingaMode ? game.title.tlh ?? game.title.en : game.title.en}
+                imageSource={game.img}
+                decor={decal}
+                onPress={() => openGame(game)}
+                bazinga={bazingaMode}
+              />
+              <TouchableOpacity onPress={() => toggleFav(game.title.en)} style={styles.star}>
+                <Ionicons name={favs.includes(game.title.en) ? 'star' : 'star-outline'} size={22} color="#facc15" />
+              </TouchableOpacity>
+            </View>
+          ))}
         </View>
       </ScrollView>
 
-      {/* -------- Modal -------- */}
+      {/* Modal */}
       <Modal visible={!!modalGame} transparent animationType="fade">
         <View style={styles.modalBg}>
           <View style={styles.modalContent}>
@@ -250,11 +250,7 @@ export default function HomeScreen() {
 
               {modalGame?.name && !modalGame?.soundboard && (
                 <TouchableOpacity onPress={() => toggleFav(modalGame.name)}>
-                  <Ionicons
-                    name={favs.includes(modalGame.name) ? 'star' : 'star-outline'}
-                    size={28}
-                    color="#facc15"
-                  />
+                  <Ionicons name={favs.includes(modalGame.name) ? 'star' : 'star-outline'} size={28} color="#facc15" />
                 </TouchableOpacity>
               )}
 
@@ -272,7 +268,7 @@ export default function HomeScreen() {
         </View>
       </Modal>
 
-      {/* -------- Social Buttons -------- */}
+      {/* Social Buttons */}
       <View style={styles.socialsContainer}>
         <TouchableOpacity style={styles.socialRow} onPress={() => Linking.openURL('https://github.com/sparkly-games')}>
           <Text style={styles.socialText}>GitHub</Text>
@@ -298,17 +294,12 @@ export default function HomeScreen() {
           <Text style={[styles.socialText, { color: '#facc15' }]}>Legacy UI</Text>
           <Ionicons name="archive-outline" size={24} color="#facc15" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.socialRow} onPress={() => window.location.href='/proto-hub.html'}>
-          <Text style={[styles.socialText, { color: '#facc15' }]}>Proto Hub</Text>
-          <Ionicons name="code-download-outline" size={24} color="#facc15" />
-        </TouchableOpacity>
       </View>
     </View>
   );
 }
 
 /* ---------------- Styles ---------------- */
-
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#030712' },
   scrollContent: { paddingBottom: 40 },
@@ -321,6 +312,8 @@ const styles = StyleSheet.create({
     top: -140,
     alignSelf: 'center',
   },
+  'new-year': { height: 175, width: 400, top: 10, alignSelf: 'center' },
+
   noticeBox: {
     margin: 16,
     padding: 22,
@@ -331,6 +324,7 @@ const styles = StyleSheet.create({
   },
   noticeTitle: { color: '#f6ec5c', fontSize: 22, fontWeight: '900', textAlign: 'center' },
   noticeText: { color: '#e5e7eb', textAlign: 'center', marginTop: 6 },
+
   search: {
     marginHorizontal: 16,
     marginBottom: 12,
@@ -344,38 +338,16 @@ const styles = StyleSheet.create({
   toggleActive: { backgroundColor: '#ec4899' },
   toggleText: { color: 'white', fontWeight: '700' },
   horrorTxt: { textAlign: 'center', marginBottom: 12, color: '#f87171', fontWeight: '800' },
+  sectionTitle: { color: '#ffffff', textAlign: 'center', marginBottom: 12, fontSize: 20, fontWeight: '800' },
   grid: { flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: 8 },
   star: { position: 'absolute', right: 10, top: 10 },
-  'new-year': { height: 175, width: 400, top: 10, alignSelf: 'center' },
 
-  modalBg: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.85)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContent: {
-    width: '95%',
-    height: '90%',
-    backgroundColor: '#111827',
-    borderRadius: 20,
-    overflow: 'hidden',
-  },
-  modalHeader: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    padding: 8,
-    gap: 12,
-  },
+  modalBg: { flex: 1, backgroundColor: 'rgba(0,0,0,0.85)', justifyContent: 'center', alignItems: 'center' },
+  modalContent: { width: '95%', height: '90%', backgroundColor: '#111827', borderRadius: 20, overflow: 'hidden' },
+  modalHeader: { flexDirection: 'row', justifyContent: 'flex-end', padding: 8, gap: 12 },
   modalX: { color: 'white', fontSize: 28, fontWeight: '900' },
 
-  socialsContainer: {
-    position: 'absolute',
-    right: 20,
-    top: 10,
-    gap: 15,
-    alignItems: 'flex-end',
-  },
+  socialsContainer: { position: 'absolute', right: 20, top: 10, gap: 15, alignItems: 'flex-end' },
   socialRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -385,9 +357,5 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     gap: 10,
   },
-  socialText: {
-    color: 'white',
-    fontSize: 14,
-    fontWeight: '600',
-  },
+  socialText: { color: 'white', fontSize: 14, fontWeight: '600' },
 });

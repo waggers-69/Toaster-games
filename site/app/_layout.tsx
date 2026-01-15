@@ -5,6 +5,7 @@ import { Text, Image, StyleSheet } from 'react-native';
 import React from 'react';
 // @ts-ignore
 import LogoImageSource from '@/assets/images/sparkly_logo_banner.png';
+import { BazingaProvider } from '@/assets/context/BazingaContext';
 
 const HeaderLogo = () => (
   <Image
@@ -17,11 +18,13 @@ const HeaderLogo = () => (
 
 export default function RootLayout() {
   return (
-    <Stack
-      screenOptions={({ route }) => ({
-        headerShown: route.name == 'vids' || route.name.substring(0, 10) == 'vidplayer/' ? true : false,
-      })}
-    />
+    <BazingaProvider>
+      <Stack
+        screenOptions={({ route }) => ({
+          headerShown: route.name == 'vids' || route.name.substring(0, 10) == 'vidplayer/' ? true : false,
+        })}
+      />
+    </BazingaProvider>
   );
 }
 

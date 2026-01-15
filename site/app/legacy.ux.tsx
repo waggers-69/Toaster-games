@@ -67,8 +67,8 @@ export default function SparklyUnifiedUI() {
   const filteredGames = useMemo(() => {
     let g = gamesData
       .filter(g => showHorror || !g.horror)
-      .filter(g => g.name.toLowerCase().includes(query.toLowerCase()));
-    return g.sort((a, b) => a.name.localeCompare(b.name));
+      .filter(g => g.title.en.toLowerCase().includes(query.toLowerCase()));
+    return g.sort((a, b) => a.title.en.localeCompare(b.title.en));
   }, [query, showHorror, view, favs]);
 
   return (

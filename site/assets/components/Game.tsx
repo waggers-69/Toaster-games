@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 import {
   Text,
   Image,
@@ -11,18 +11,28 @@ import {
 import { decorIcons } from '@/assets/images/DecorIcons';
 import { gameIcons } from '@/assets/data/GameIcons';
 
-type DecorEvent = 'halloween' | 'christmas' | 'easter' | 'stpatricks' | 'new-year';
+type DecorEvent = 'halloween' | 'christmas' | 'new-year';
 
 interface GameProps {
-  name: string;
+  name: string; // Already translated to the current language
   imageSource: string; // key for gameIcons map
   onPress: () => void;
   decor?: DecorEvent;
-  newUntil?: number; // YYMMDDHH format
+  newUntil?: number; // YYMMDDHH
   pcOnly?: boolean;
   legacy?: boolean;
   leaving?: string;
+  bazinga?: boolean; // NEW: toggle chaos images
 }
+
+const CHAOS: ImageSourcePropType[] = [
+  require('@/assets/images/chaos/1.jpg'),
+  require('@/assets/images/chaos/2.jpg'),
+  require('@/assets/images/chaos/3.jpg'),
+  require('@/assets/images/chaos/4.jpg'),
+  require('@/assets/images/chaos/5.webp'),
+];
+const DOG = require('@/assets/images/dog.jpeg');
 
 export function Game({
   name,
@@ -33,11 +43,11 @@ export function Game({
   pcOnly,
   legacy,
   leaving,
+  bazinga = false,
 }: GameProps) {
   const icon: ImageSourcePropType = gameIcons[imageSource];
-  let decorIcon: ImageSourcePropType | null = null;
 
-  /** 🏆 Awards (Top 10) */
+  /** 🏆 Awards */
   const awards: Record<string, string> = {
     ad: '🎖️ 2025',
     '6': '🥇 2025',
@@ -50,13 +60,11 @@ export function Game({
     '8': '🎖️ 2025',
     l: '🎖️ 2025',
   };
-
   const awardBadge = awards[imageSource] ?? null;
   const pulseAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
     if (!awardBadge) return;
-
     Animated.loop(
       Animated.sequence([
         Animated.timing(pulseAnim, { toValue: 1.1, duration: 900, useNativeDriver: true }),
@@ -65,7 +73,8 @@ export function Game({
     ).start();
   }, [awardBadge]);
 
-  // Handle Decor Logic
+  // Decor icon logic
+  let decorIcon: ImageSourcePropType | null = null;
   if (decor && decorIcons[decor]) {
     const options = decorIcons[decor];
     decorIcon = options[Math.floor(Math.random() * options.length)];
@@ -73,54 +82,46 @@ export function Game({
 
   if (!icon) return null;
 
-  // Badge Logic
+  // NEW: Randomized image when Bazinga is ON
+  const finalImage = useMemo(() => {
+    if (!bazinga) return icon;
+    if (Math.floor(Math.random() * 1000) === 0) return DOG;
+    return CHAOS[Math.floor(Math.random() * CHAOS.length)];
+  }, [bazinga]);
+
+  // Badge logic
   const showNewBadge = (() => {
     if (!newUntil) return false;
     const year = 2000 + Math.floor(newUntil / 1000000);
     const month = Math.floor((newUntil % 1000000) / 10000) - 1;
     const day = Math.floor((newUntil % 10000) / 100);
     const hour = newUntil % 100;
-    const expireTime = new Date(year, month, day, hour).getTime();
-    return Date.now() < expireTime;
+    return Date.now() < new Date(year, month, day, hour).getTime();
   })();
 
   return (
     <View style={{ position: 'relative', margin: 5 }}>
       {decorIcon && <Image source={decorIcon} style={styles.decor} />}
-
       <TouchableOpacity onPress={onPress} style={styles.card}>
         <View style={styles.imageWrapper}>
-          <Image source={icon} style={styles.image} />
+          <Image source={finalImage} style={styles.image} />
         </View>
-          {/* Status Badges */}
-          {showNewBadge && (
-            <Text style={styles.newBadge}>NEW</Text>
-          )}
-          {pcOnly && (
-            <Text style={styles.pcBadge}>PC</Text>
-          )}
 
-          {/* Award Badge: Logic Fixed Here */}
-          {!legacy && awardBadge && (
-            <Animated.View
-              style={[
-                styles.awardBadge,
-                { transform: [{ scale: pulseAnim }] },
-              ]}
-            >
-              <Text style={styles.awardText}>{awardBadge}</Text>
-            </Animated.View>
-          )}
-          {!legacy && leaving && (
-            <Animated.View
-              style={[
-                styles.awardBadge,
-                { transform: [{ scale: pulseAnim }] },
-              ]}
-            >
-              <Text style={styles.awardText}>Last day to play: {leaving}</Text>
-            </Animated.View>
-          )}
+        {showNewBadge && <Text style={styles.newBadge}>NEW</Text>}
+        {pcOnly && <Text style={styles.pcBadge}>PC</Text>}
+
+        {!legacy && awardBadge && (
+          <Animated.View style={[styles.awardBadge, { transform: [{ scale: pulseAnim }] }]}>
+            <Text style={styles.awardText}>{awardBadge}</Text>
+          </Animated.View>
+        )}
+
+        {!legacy && leaving && (
+          <Animated.View style={[styles.awardBadge, { transform: [{ scale: pulseAnim }] }]}>
+            <Text style={styles.awardText}>Last day to play: {leaving}</Text>
+          </Animated.View>
+        )}
+
         <Text style={styles.text} numberOfLines={1}>{name}</Text>
       </TouchableOpacity>
     </View>
@@ -129,11 +130,10 @@ export function Game({
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#383b3a', // Hex equivalent of your rgb
+    backgroundColor: '#383b3a',
     borderRadius: 24,
     alignItems: 'center',
     padding: 10,
-    // Note: Elevation/Shadow only works if container has a background
   },
   imageWrapper: {
     position: 'relative',
