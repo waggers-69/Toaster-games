@@ -23,7 +23,7 @@ export const ChaosImage = ({ bazinga, source, ...rest }: ChaosImageProps) => {
   const finalSource = useMemo(() => {
     if (!bazinga) return source;
 
-    if (Math.floor(Math.random() * 1000) === 0) return DOG;
+    if (Math.floor(Math.random() * 500) === 0) return DOG;
 
     const index = Math.floor(Math.random() * CHAOS.length);
     return CHAOS[index];
