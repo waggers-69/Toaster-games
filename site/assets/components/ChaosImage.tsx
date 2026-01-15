@@ -18,12 +18,14 @@ const CHAOS: ImageSourcePropType[] = [
 ];
 
 const DOG = require('@/assets/images/dog.jpeg');
+const BLUE = require('@/assets/images/blue.jpg');
 
 export const ChaosImage = ({ bazinga, source, ...rest }: ChaosImageProps) => {
   const finalSource = useMemo(() => {
     if (!bazinga) return source;
 
     if (Math.floor(Math.random() * 500) === 0) return DOG;
+    if (Math.floor(Math.random() * 1000) === 0) return BLUE;
 
     const index = Math.floor(Math.random() * CHAOS.length);
     return CHAOS[index];
