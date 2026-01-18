@@ -7,6 +7,9 @@
     ],
     "scripts": {
         "export": "sh ./export.sh",
-        "start": "cd site && npm start"
+        "start": "concurrently \"cd site && npm start\" \"cd docs && npm start\""
+    },
+    "dependencies": {
+        "concurrently": "^9.2.1"
     }
 }

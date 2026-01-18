@@ -6,7 +6,7 @@ sidebar_position: 1
 
 ## Prerequisites
 
-- A [SparklyDev](/sparkly-dev/) account
+- A Sparkly.Dev account
 - [Node.js](https://nodejs.org) and [npm](https://npmjs.org)
 - ~15 GB of free disk space
 - A game idea
@@ -47,8 +47,7 @@ As a safety measure, affected accounts may temporarily enter **Safe Mode**, disa
 :::
 
 :::info Need help?
-
-Email: **hijack@sparkly.creepers.sbs**
+Contact us and we'll be in touch!
 :::
 
 ---

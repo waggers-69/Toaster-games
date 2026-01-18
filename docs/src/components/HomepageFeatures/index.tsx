@@ -11,12 +11,12 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Easy to Use',
+    title: 'Intuitive Setup',
     Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Drop your game in, configure a few settings, and you&apos;re good to go.
+        Sparkly takes care of the rest, so you can focus on building your game.
       </>
     ),
   },
@@ -25,18 +25,18 @@ const FeatureList: FeatureItem[] = [
     Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Focus on building your game, and we&apos;ll handle the rest. Go ahead and
+        move your game assets into the <code>public</code> directory.
       </>
     ),
   },
   {
-    title: 'Powered by React',
+    title: 'Scale with our API',
     Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Extend your app with the Sparkly API. Add IAPs, ads and even more with
+        just a few lines of code. 
       </>
     ),
   },

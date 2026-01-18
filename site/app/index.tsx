@@ -51,7 +51,7 @@ export default function Home() {
             <View style={{width: 15}} />
 
           <View style={styles.nav}>
-            <Text style={[styles.navItem, styles.navMuted]} onPress={() => window.location.href = '/docs'}>Docs</Text>
+            <Text style={[styles.navItem, styles.navMuted]} onPress={() => { if(window.location.hostname !== "localhost") window.location.href = '/docs'; else {window.location.href = 'http://localhost:3000/docs'} }}>Docs</Text>
           </View>
         </View>
       </View>

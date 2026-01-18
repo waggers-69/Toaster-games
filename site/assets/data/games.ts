@@ -1,5 +1,5 @@
 export const gamesData = [
-  { title: { en: "A Dance of Fire and Ice", tlh: "qul 'ej 'Iw bom" }, img: "ad", url: "/adofai/", leaving: "15th Jan" },
+  // { title: { en: "A Dance of Fire and Ice", tlh: "qul 'ej 'Iw bom" }, img: "ad", url: "/adofai/", leaving: "15th Jan" },
   { title: { en: "A Small World Cup", tlh: "qo' mach quj" }, img: "ag", url: "/small-world-cup.html" },
   { title: { en: "Adventure Drivers", tlh: "Heghlu'meH Qaw'be' Hoch" }, img: "ae", url: "/adventuredrivers/" },
   { title: { en: "Basket Random", tlh: "Sap QumwI' Dotlh" }, img: "ac", url: "/randoms/basket/" },
@@ -46,7 +46,6 @@ export const gamesData = [
 
   { title: { en: "Soccer Random", tlh: "soccer QumwI'" }, img: "ak", url: "/randoms/soccer/" },
   { title: { en: "Spiral Roll", tlh: "meQ QIb" }, img: "i", url: "/slice-roll/" },
-  { title: { en: "Stack", tlh: "ngoq" }, img: "v", url: "/stack/" },
   { title: { en: "Subway Surfers", tlh: "Subway juHwI'" }, img: "3", url: "/subway-surfers/" },
 
   { title: { en: "Survival Race", tlh: "taHghach He" }, img: "d", url: "/survival-race/" },
@@ -79,6 +78,10 @@ export const gamesData = [
   { title: { en: "Stickman Archer", tlh: "qInHom SuvwI'" }, img: "bd", url: "/stickman-archer.htm" },
   { title: { en: "OvO Dimensions", tlh: "OvO Hoch logh" }, img: "be", url: "/ovo-dimensions.html" },
   { title: { en: "Recoil", tlh: "pumHa'" }, img: "bf", url: "/recoil.html" },
-  { title: { en: "Doodle Jump", tlh: "ghItlh pIq" }, img: "bg", url: "/doodlejump.html", leaving: "22nd Jan" },
-  { title: { en: "OvO 2", tlh: "OvO cha'" }, img: "bh", url: "/ovo2.html" }
+  { title: { en: "Doodle Jump", tlh: "ghItlh pIq" }, img: "bg", url: "/doodlejump.html", leaving: "22nd Jan", pc: true },
+  { title: { en: "OvO 2", tlh: "OvO cha'" }, img: "bh", url: "/ovo2.html", pc: true },
+
+  { title: { en: "Fruit Ninja", tlh: "Nah ninja" }, img: "v", url: "/fruitninja.htm" },
+  { title: { en: "GD SubZero", tlh: "GD SubZero" }, img: "j", url: "/gd-sub0.htm"},
+  { title: { en: "Going Balls", tlh: "Going Balls" }, img: "ad", url: "/going-balls.htm" },
 ];

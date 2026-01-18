@@ -27,6 +27,7 @@ const LS_RECENT = 'sparkly:recent';
 export default function HomeScreen() {
   const { width } = useWindowDimensions();
   const router = useRouter();
+  const iframeRef = useRef<HTMLIFrameElement | null>(null);
 
   /* ---------------- Bazinga ---------------- */
   const [bazingaMode, setBazingaMode] = useState(false);
@@ -65,7 +66,7 @@ export default function HomeScreen() {
   /* ---------------- Soundboard ---------------- */
   const soundboard = () => {
     setModalGame({
-      name: 'Soundboard',
+      title: { en: 'Soundboard', tlh: 'Soundboard' },
       url: '/soundboard.htm',
       soundboard: true,
     });
@@ -78,6 +79,7 @@ export default function HomeScreen() {
   const [favs, setFavs] = useState<string[]>([]);
   const [recent, setRecent] = useState<string[]>([]);
   const [showHorror, setShowHorror] = useState(false);
+  const [showPC, setShowPC] = useState(false);
   const [modalGame, setModalGame] = useState<any>(null);
   const [iframeKey, setIframeKey] = useState(0);
 
@@ -109,7 +111,19 @@ export default function HomeScreen() {
     if (f) setFavs(JSON.parse(f));
     if (r) setRecent(JSON.parse(r));
   }, []);
-
+  const handleFullscreen = () => {
+    if (iframeRef.current) {
+      if (iframeRef.current.requestFullscreen) {
+        iframeRef.current.requestFullscreen();
+      } else if ((iframeRef.current as any).webkitRequestFullscreen) {
+        /* Safari/iOS Support */
+        (iframeRef.current as any).webkitRequestFullscreen();
+      } else if ((iframeRef.current as any).msRequestFullscreen) {
+        /* IE11 Support */
+        (iframeRef.current as any).msRequestFullscreen();
+      }
+    }
+  };
   const saveFavs = (next: string[]) => {
     setFavs(next);
     if (typeof window !== 'undefined') localStorage.setItem(LS_FAVS, JSON.stringify(next));
@@ -132,13 +146,14 @@ export default function HomeScreen() {
   const games = useMemo(() => {
     let g = gamesData
       .filter(g => showHorror || !g.horror)
+      .filter(g => showPC || !g.pc)
       .filter(g => g.title.en.toLowerCase().includes(query.toLowerCase()));
 
     if (view === 'favs') g = g.filter(g => favs.includes(g.title.en));
     if (view === 'recent') g = g.filter(g => recent.includes(g.title.en));
 
     return g.sort((a, b) => a.title.en.localeCompare(b.title.en));
-  }, [query, showHorror, view, favs, recent]);
+  }, [query, showHorror, showPC, view, favs, recent]);
 
   const columns = width < 420 ? 2 : width < 900 ? 3 : 4;
   const itemWidth = Math.floor((width - 24) / columns);
@@ -167,7 +182,27 @@ export default function HomeScreen() {
           <Text style={[styles.noticeText, { fontWeight: 'bold' }]}>
             {bazingaMode ? 'UBGU chut' : 'Officially joining the UBGU!'}
           </Text>
-          <Text style={styles.noticeText}>v7.2.0 · 15/01/26</Text>
+          <Text style={styles.noticeText}>v7.2.4 · 18/01/26</Text>
+          <View style={{ height: 24, flexDirection: 'row', gap: 12 }} >
+            <TouchableOpacity onPress={() => Linking.openURL('https://github.com/sparkly-games')}>
+              <Ionicons name="logo-octocat" size={24} color="white" />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => { if(window.location.hostname !== "localhost") window.location.href = '/docs'; else {window.location.href = 'http://localhost:3000/docs'} }}>
+              <Ionicons name="document-attach-outline" size={24} color="white" />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => router.push('/vids')}>
+              <Ionicons name="logo-youtube" size={24} color="white" />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={bazinga}>
+              <Ionicons name="logo-electron" size={24} color="white" />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={soundboard}>
+              <Ionicons name="clipboard-outline" size={24} color="white" />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => router.push('/sparkly-dev')}>
+              <Ionicons name="code" size={24} color="white" />
+            </TouchableOpacity>
+          </View>
         </Animated.View>
 
         {/* Search */}
@@ -198,9 +233,14 @@ export default function HomeScreen() {
         <TouchableOpacity onPress={() => setShowHorror(!showHorror)}>
           <Text style={styles.horrorTxt}>{showHorror ? (bazingaMode ? 'ghItlh Horror' : 'Hide Horror') : (bazingaMode ? 'Qagh Horror' : 'Show Horror')}</Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => setShowPC(!showPC)}>
+          <Text style={styles.horrorTxt}>{showPC ? (bazingaMode ? 'ghItlh PC' : 'Hide PC') : (bazingaMode ? 'Qagh PC' : 'Show PC')}</Text>
+        </TouchableOpacity>
 
         {/* Leaving Soon */}
-        <Text style={styles.sectionTitle}>{bazingaMode ? 'yItlhutlh qet' : 'Leaving Soon'}</Text>
+        { games.some(g => g.leaving) && (
+          <Text style={styles.sectionTitle}>{bazingaMode ? 'yItlhutlh qet' : 'Leaving Soon'}</Text>
+        )}
         <View style={styles.grid}>
           {games.filter(game => game.leaving).map(game => (
             <View key={game.title.en} style={{ width: itemWidth }}>
@@ -247,10 +287,13 @@ export default function HomeScreen() {
               <TouchableOpacity onPress={() => setModalGame(null)}>
                 <Text style={styles.modalX}>✕</Text>
               </TouchableOpacity>
+              <TouchableOpacity onPress={handleFullscreen}>
+                <Ionicons name="scan" size={28} color="white" />
+              </TouchableOpacity>
 
-              {modalGame?.name && !modalGame?.soundboard && (
-                <TouchableOpacity onPress={() => toggleFav(modalGame.name)}>
-                  <Ionicons name={favs.includes(modalGame.name) ? 'star' : 'star-outline'} size={28} color="#facc15" />
+              {modalGame?.title.en && !modalGame?.soundboard && (
+                <TouchableOpacity onPress={() => toggleFav(modalGame.title.en)}>
+                  <Ionicons name={favs.includes(modalGame.title.en) ? 'star' : 'star-outline'} size={28} color="#facc15" />
                 </TouchableOpacity>
               )}
 
@@ -260,6 +303,7 @@ export default function HomeScreen() {
             </View>
 
             <iframe
+              ref={iframeRef}
               key={iframeKey}
               src={modalGame?.url}
               style={{ flex: 1, width: '100%', border: 'none' }}
@@ -267,34 +311,6 @@ export default function HomeScreen() {
           </View>
         </View>
       </Modal>
-
-      {/* Social Buttons */}
-      <View style={styles.socialsContainer}>
-        <TouchableOpacity style={styles.socialRow} onPress={() => Linking.openURL('https://github.com/sparkly-games')}>
-          <Text style={styles.socialText}>GitHub</Text>
-          <Ionicons name="logo-octocat" size={24} color="white" />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.socialRow} onPress={() => router.push('/vids')}>
-          <Text style={styles.socialText}>Videos</Text>
-          <Ionicons name="logo-youtube" size={24} color="white" />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.socialRow} onPress={bazinga}>
-          <Text style={styles.socialText}>Bazinga</Text>
-          <Ionicons name="logo-electron" size={24} color="white" />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.socialRow} onPress={soundboard}>
-          <Text style={styles.socialText}>Soundboard</Text>
-          <Ionicons name="clipboard-outline" size={24} color="white" />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.socialRow} onPress={() => router.push('/legacy.ux')}>
-          <Text style={[styles.socialText, { color: '#facc15' }]}>Legacy UI</Text>
-          <Ionicons name="archive-outline" size={24} color="#facc15" />
-        </TouchableOpacity>
-      </View>
     </View>
   );
 }
@@ -346,16 +362,4 @@ const styles = StyleSheet.create({
   modalContent: { width: '95%', height: '90%', backgroundColor: '#111827', borderRadius: 20, overflow: 'hidden' },
   modalHeader: { flexDirection: 'row', justifyContent: 'flex-end', padding: 8, gap: 12 },
   modalX: { color: 'white', fontSize: 28, fontWeight: '900' },
-
-  socialsContainer: { position: 'absolute', right: 20, top: 10, gap: 15, alignItems: 'flex-end' },
-  socialRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'rgba(255,255,255,0.05)',
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderRadius: 10,
-    gap: 10,
-  },
-  socialText: { color: 'white', fontSize: 14, fontWeight: '600' },
 });

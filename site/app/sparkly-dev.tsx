@@ -22,7 +22,7 @@ export default function ComingSoon() {
       </Head>
 
       <ImageBackground
-        source={{ uri: 'https://picsum.photos/1600/900?blur=6' }}
+        source={{ uri: 'https://picsum.photos/1600/900?blur=10' }}
         style={styles.background}
         blurRadius={Platform.OS === 'web' ? 0 : 8} // native blur fallback
       >
@@ -42,10 +42,22 @@ export default function ComingSoon() {
             Tools, APIs, and dashboards for building the next generation of
             Sparkly games.
           </Text>
-
+          <Pressable
+            disabled={true}
+            style={[styles.button2, { marginBottom: 12, opacity: 0.5 }]}
+            onPress={() => {
+              if (window.location.hostname !== 'localhost')
+                window.location.href = '/docs';
+              else {
+                window.location.href = 'http://localhost:3000/docs';
+              }
+            }}
+          >
+            <Text style={styles.buttonText2}>Join Us →</Text>
+          </Pressable>
           <Pressable
             style={styles.button}
-            onPress={() => window.location.href = '/docs'}
+            onPress={() => { if(window.location.hostname !== "localhost") window.location.href = '/docs'; else {window.location.href = 'http://localhost:3000/docs'} }}
           >
             <Text style={styles.buttonText}>View Docs →</Text>
           </Pressable>
@@ -115,9 +127,24 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(255,255,255,0.15)',
   },
+  button2: {
+    paddingHorizontal: 28,
+    paddingVertical: 14,
+    borderRadius: 14,
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.5)',
+  },
 
   buttonText: {
     color: '#ffffff',
+    fontWeight: '800',
+    fontSize: 14,
+    letterSpacing: 1,
+    textTransform: 'uppercase',
+  },
+  buttonText2: {
+    color: '#000000',
     fontWeight: '800',
     fontSize: 14,
     letterSpacing: 1,

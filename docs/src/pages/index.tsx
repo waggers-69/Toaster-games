@@ -33,8 +33,8 @@ export default function Home(): ReactNode {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
+      title={siteConfig.title}
+      description="Start your developer journey with Sparkly Games. Build, publish, and scale games with our powerful platform and tools.">
       <HomepageHeader />
       <main>
         <HomepageFeatures />

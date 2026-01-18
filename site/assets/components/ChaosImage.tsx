@@ -18,7 +18,7 @@ const CHAOS: ImageSourcePropType[] = [
 ];
 
 const DOG = require('@/assets/images/dog.jpeg');
-const BLUE = require('@/assets/images/blue.jpg');
+const BLUE = require('@/assets/images/blue.jpeg');
 
 export const ChaosImage = ({ bazinga, source, ...rest }: ChaosImageProps) => {
   const finalSource = useMemo(() => {

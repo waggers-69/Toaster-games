@@ -5,7 +5,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
-  title: 'Sparkly Games | Developer',
+  title: 'Sparkly Developer Docs',
   tagline: 'Reach new audiences with Sparkly Games',
   favicon: 'img/logo.png',
 
@@ -49,9 +49,9 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'Sparkly Games',
+      title: 'Sparkly Developer Docs',
       logo: {
-        alt: 'Sparkly Games Logo',
+        alt: 'Sparkly Logo',
         src: 'img/logo.png',
       },
       items: [
@@ -76,7 +76,7 @@ const config: Config = {
           items: [
             {
               label: 'Quick Start',
-              to: '/docs/quick-start',
+              to: '/quick-start',
             },
           ],
         }
