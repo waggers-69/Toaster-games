@@ -1,5 +1,4 @@
 export const gamesData = [
-  // { title: { en: "A Dance of Fire and Ice", tlh: "qul 'ej 'Iw bom" }, img: "ad", url: "/adofai/", leaving: "15th Jan" },
   { title: { en: "A Small World Cup", tlh: "qo' mach quj" }, img: "ag", url: "/small-world-cup.html" },
   { title: { en: "Adventure Drivers", tlh: "Heghlu'meH Qaw'be' Hoch" }, img: "ae", url: "/adventuredrivers/" },
   { title: { en: "Basket Random", tlh: "Sap QumwI' Dotlh" }, img: "ac", url: "/randoms/basket/" },
@@ -19,9 +18,7 @@ export const gamesData = [
   { title: { en: "Five Nights at Freddy’s 2", tlh: "Freddy vaS vagh jajlogh cha'" }, img: "ah", url: "/fnaf/FNAF2/", horror: true },
   { title: { en: "Five Nights at Freddy’s 3", tlh: "Freddy vaS vagh jajlogh wej" }, img: "ai", url: "/fnaf/FNAF3/", horror: true },
 
-  { title: { en: "Geometry Dash 3D", tlh: "ngoQ SuS wejD" }, img: "o", url: "/gd3d/", leaving: "19th Jan" },
   { title: { en: "Geometry Dash Wave", tlh: "ngoQ SuS meQ" }, img: "x", url: "/gd-wave/" },
-  { title: { en: "Wave Road 3D", tlh: "meQ He 3D" }, img: "av", url: "/wave3d/", leaving: "19th Jan" },
 
   { title: { en: "Gobble", tlh: "Sopqu'" }, img: "r", url: "/gobble/" },
   { title: { en: "Google Games Baseball", tlh: "Google baseball quj" }, img: "y", url: "/baseball/" },
@@ -83,5 +80,6 @@ export const gamesData = [
 
   { title: { en: "Fruit Ninja", tlh: "Nah ninja" }, img: "v", url: "/fruitninja.htm" },
   { title: { en: "GD SubZero", tlh: "GD SubZero" }, img: "j", url: "/gd-sub0.htm"},
-  { title: { en: "Going Balls", tlh: "Going Balls" }, img: "ad", url: "/going-balls.htm" },
+  { title: { en: "Going Balls", tlh: "Going Balls" }, img: "ad", url: "/going-balls.htm", leaving: "4th Feb" },
+  { title: { en: "Driven Wild", tlh: "Driven Wild" }, img: "ao", url: "/drivenwild/index.html" },
 ];
