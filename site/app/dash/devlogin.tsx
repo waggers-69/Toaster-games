@@ -10,7 +10,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Head from 'expo-router/head';
-import { auth } from '@/public/firebaseConfig.js';
+import { auth } from '@/assets/data/firebaseConfig.js';
 import { signInWithPopup, GithubAuthProvider } from 'firebase/auth';
 import { router } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';

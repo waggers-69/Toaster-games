@@ -75,7 +75,6 @@ export const gamesData = [
   { title: { en: "Stickman Archer", tlh: "qInHom SuvwI'" }, img: "bd", url: "/stickman-archer.htm" },
   { title: { en: "OvO Dimensions", tlh: "OvO Hoch logh" }, img: "be", url: "/ovo-dimensions.html" },
   { title: { en: "Recoil", tlh: "pumHa'" }, img: "bf", url: "/recoil.html" },
-  { title: { en: "Doodle Jump", tlh: "ghItlh pIq" }, img: "bg", url: "/doodlejump.html", leaving: "22nd Jan", pc: true },
   { title: { en: "OvO 2", tlh: "OvO cha'" }, img: "bh", url: "/ovo2.html", pc: true },
 
   { title: { en: "Fruit Ninja", tlh: "Nah ninja" }, img: "v", url: "/fruitninja.htm" },

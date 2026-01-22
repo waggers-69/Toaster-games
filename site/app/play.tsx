@@ -182,13 +182,10 @@ export default function HomeScreen() {
           <Text style={[styles.noticeText, { fontWeight: 'bold' }]}>
             {bazingaMode ? 'UBGU chut' : 'Officially joining the UBGU!'}
           </Text>
-          <Text style={styles.noticeText}>v7.2.4 · 18/01/26</Text>
+          <Text style={styles.noticeText}>v7.3.0 · 22/01/26</Text>
           <View style={{ height: 24, flexDirection: 'row', gap: 12 }} >
             <TouchableOpacity onPress={() => Linking.openURL('https://github.com/sparkly-games')}>
               <Ionicons name="logo-octocat" size={24} color="white" />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => { if(window.location.hostname !== "localhost") window.location.href = '/docs'; else {window.location.href = 'http://localhost:3000/docs'} }}>
-              <Ionicons name="document-attach-outline" size={24} color="white" />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => router.push('/vids')}>
               <Ionicons name="logo-youtube" size={24} color="white" />
@@ -201,6 +198,9 @@ export default function HomeScreen() {
             </TouchableOpacity>
             <TouchableOpacity onPress={() => router.push('/sparkly-dev')}>
               <Ionicons name="code" size={24} color="white" />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => router.push('/sparklytv')}>
+              <Ionicons name="tv-outline" size={24} color="white" />
             </TouchableOpacity>
           </View>
         </Animated.View>

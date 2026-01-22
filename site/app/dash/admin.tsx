@@ -10,8 +10,8 @@ import {
   Alert,
   Platform,
 } from 'react-native';
-import { auth } from '@/public/firebaseConfig.js';
-import { supabase } from '@/public/supabaseConfig.js';
+import { auth } from '@/assets/data/firebaseConfig.js';
+import { supabase } from '@/assets/data/supabaseConfig.js';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { router } from 'expo-router';
 import * as DocumentPicker from 'expo-document-picker';
