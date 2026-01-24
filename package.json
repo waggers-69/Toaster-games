@@ -1,15 +1,16 @@
 {
-    "name": "sparkly-monorepo",
-    "private": true,
-    "workspaces": [
-        "site",
-        "docs"
-    ],
-    "scripts": {
-        "export": "sh ./export.sh",
-        "start": "concurrently \"cd site && npm start\" \"cd docs && npm start\""
-    },
-    "dependencies": {
-        "concurrently": "^9.2.1"
-    }
+  "name": "sparkly-monorepo",
+  "private": true,
+  "workspaces": [
+    "site",
+    "docs"
+  ],
+  "scripts": {
+    "export": "sh ./export.sh",
+    "start": "concurrently \"cd site && npm start\" \"cd docs && npm start\""
+  },
+  "dependencies": {
+    "concurrently": "^9.2.1",
+    "expo-dev-client": "~6.0.20"
+  }
 }

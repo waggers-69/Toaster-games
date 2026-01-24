@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useMemo } from 'react';
+import React, { useEffect, useRef, useMemo, useState } from 'react';
 import {
   Text,
   Image,
@@ -14,16 +14,25 @@ import { gameIcons } from '@/assets/data/GameIcons';
 type DecorEvent = 'halloween' | 'christmas' | 'new-year';
 
 interface GameProps {
-  name: string; // Already translated to the current language
-  imageSource: string; // key for gameIcons map
+  name: string;
+  imageSource: string;
   onPress: () => void;
   decor?: DecorEvent;
   newUntil?: number; // YYMMDDHH
   pcOnly?: boolean;
   legacy?: boolean;
   leaving?: string;
-  bazinga?: boolean; // NEW: toggle chaos images
+  bazinga?: boolean;
+  broken?: boolean;
 }
+
+/* -------------------- Images -------------------- */
+
+const PLACEHOLDER: ImageSourcePropType = {
+  uri: 'https://placehold.co/200?text=?',
+};
+
+const DOG = require('@/assets/images/dog.jpeg');
 
 const CHAOS: ImageSourcePropType[] = [
   require('@/assets/images/chaos/1.jpg'),
@@ -32,7 +41,6 @@ const CHAOS: ImageSourcePropType[] = [
   require('@/assets/images/chaos/4.jpg'),
   require('@/assets/images/chaos/5.webp'),
 ];
-const DOG = require('@/assets/images/dog.jpeg');
 
 export function Game({
   name,
@@ -44,12 +52,16 @@ export function Game({
   legacy,
   leaving,
   bazinga = false,
+  broken = false,
 }: GameProps) {
-  const icon: ImageSourcePropType = gameIcons[imageSource];
+  /* -------------------- Icon resolution -------------------- */
 
-  /** 🏆 Awards */
+  const baseIcon: ImageSourcePropType =
+    gameIcons[imageSource] ?? PLACEHOLDER;
+
+  /* -------------------- Awards -------------------- */
+
   const awards: Record<string, string> = {
-    ad: '🎖️ 2025',
     '6': '🥇 2025',
     a: '🥈 2025',
     '1': '🥉 2025',
@@ -60,6 +72,7 @@ export function Game({
     '8': '🎖️ 2025',
     l: '🎖️ 2025',
   };
+
   const awardBadge = awards[imageSource] ?? null;
   const pulseAnim = useRef(new Animated.Value(1)).current;
 
@@ -67,29 +80,51 @@ export function Game({
     if (!awardBadge) return;
     Animated.loop(
       Animated.sequence([
-        Animated.timing(pulseAnim, { toValue: 1.1, duration: 900, useNativeDriver: true }),
-        Animated.timing(pulseAnim, { toValue: 1, duration: 900, useNativeDriver: true }),
+        Animated.timing(pulseAnim, {
+          toValue: 1.1,
+          duration: 900,
+          useNativeDriver: true,
+        }),
+        Animated.timing(pulseAnim, {
+          toValue: 1,
+          duration: 900,
+          useNativeDriver: true,
+        }),
       ])
     ).start();
-  }, [awardBadge]);
+  }, [awardBadge, pulseAnim]);
 
-  // Decor icon logic
+  /* -------------------- Decor -------------------- */
+
   let decorIcon: ImageSourcePropType | null = null;
   if (decor && decorIcons[decor]) {
     const options = decorIcons[decor];
     decorIcon = options[Math.floor(Math.random() * options.length)];
   }
 
-  if (!icon) return null;
+  /* -------------------- Chaos / Bazinga -------------------- */
 
-  // NEW: Randomized image when Bazinga is ON
-  const finalImage = useMemo(() => {
-    if (!bazinga) return icon;
-    if (Math.floor(Math.random() * 1000) === 0) return DOG;
+  const finalImage = useMemo<ImageSourcePropType>(() => {
+    if (!bazinga) return baseIcon;
+
+    if (Math.floor(Math.random() * 1000) === 0) {
+      return DOG;
+    }
+
     return CHAOS[Math.floor(Math.random() * CHAOS.length)];
-  }, [bazinga]);
+  }, [bazinga, baseIcon]);
 
-  // Badge logic
+  /* -------------------- Runtime image fallback -------------------- */
+
+  const [imgSource, setImgSource] =
+    useState<ImageSourcePropType>(finalImage);
+
+  useEffect(() => {
+    setImgSource(finalImage);
+  }, [finalImage]);
+
+  /* -------------------- NEW badge logic -------------------- */
+
   const showNewBadge = (() => {
     if (!newUntil) return false;
     const year = 2000 + Math.floor(newUntil / 1000000);
@@ -99,41 +134,65 @@ export function Game({
     return Date.now() < new Date(year, month, day, hour).getTime();
   })();
 
+  /* -------------------- Render -------------------- */
+
   return (
     <View style={{ position: 'relative', margin: 5 }}>
       {decorIcon && <Image source={decorIcon} style={styles.decor} />}
+
       <TouchableOpacity onPress={onPress} style={styles.card}>
         <View style={styles.imageWrapper}>
-          <Image source={finalImage} style={styles.image} />
+          <Image
+            source={imgSource}
+            style={styles.image}
+            onError={() => setImgSource(PLACEHOLDER)}
+          />
         </View>
 
         {showNewBadge && <Text style={styles.newBadge}>NEW</Text>}
         {pcOnly && <Text style={styles.pcBadge}>PC</Text>}
+        {broken && <Text style={styles.brokenBadge}>BUGGED</Text>}
 
         {!legacy && awardBadge && (
-          <Animated.View style={[styles.awardBadge, { transform: [{ scale: pulseAnim }] }]}>
+          <Animated.View
+            style={[
+              styles.awardBadge,
+              { transform: [{ scale: pulseAnim }] },
+            ]}
+          >
             <Text style={styles.awardText}>{awardBadge}</Text>
           </Animated.View>
         )}
 
         {!legacy && leaving && (
-          <Animated.View style={[styles.awardBadge, { transform: [{ scale: pulseAnim }] }]}>
-            <Text style={styles.awardText}>Last day to play: {leaving}</Text>
+          <Animated.View
+            style={[
+              styles.leavingBadge,
+              { transform: [{ scale: pulseAnim }] },
+            ]}
+          >
+            <Text style={styles.awardText}>Last day: {leaving}</Text>
           </Animated.View>
         )}
 
-        <Text style={styles.text} numberOfLines={1}>{name}</Text>
+        <Text style={styles.text} numberOfLines={1}>
+          {name}
+        </Text>
       </TouchableOpacity>
     </View>
   );
 }
 
+/* -------------------- Styles -------------------- */
+
 const styles = StyleSheet.create({
   card: {
+    position: 'relative',
     backgroundColor: '#383b3a',
     borderRadius: 24,
     alignItems: 'center',
     padding: 10,
+    overflow: 'visible', // important for web
   },
   imageWrapper: {
     position: 'relative',
@@ -166,12 +225,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#00d084',
     color: 'white',
     fontWeight: '800',
-    fontSize: 9,
+    fontSize: 10,
     paddingVertical: 2,
     paddingHorizontal: 6,
     borderRadius: 6,
-    zIndex: 20,
-    overflow: 'hidden',
+    zIndex: 40,
   },
   pcBadge: {
     position: 'absolute',
@@ -180,12 +238,24 @@ const styles = StyleSheet.create({
     backgroundColor: '#4b9eff',
     color: 'white',
     fontWeight: '800',
-    fontSize: 9,
+    fontSize: 10,
     paddingVertical: 2,
     paddingHorizontal: 6,
     borderRadius: 6,
-    zIndex: 20,
-    overflow: 'hidden',
+    zIndex: 40,
+  },
+  brokenBadge: {
+    position: 'absolute',
+    top: 28,
+    left: 5,
+    backgroundColor: '#ff4d4d',
+    color: 'white',
+    fontWeight: '900',
+    fontSize: 10,
+    paddingVertical: 2,
+    paddingHorizontal: 6,
+    borderRadius: 6,
+    zIndex: 45,
   },
   awardBadge: {
     position: 'absolute',
@@ -198,6 +268,16 @@ const styles = StyleSheet.create({
     zIndex: 30,
     borderWidth: 1,
     borderColor: 'rgba(0,0,0,0.1)',
+  },
+  leavingBadge: {
+    position: 'absolute',
+    bottom: 10,
+    left: 10,
+    backgroundColor: '#ffd966',
+    paddingVertical: 3,
+    paddingHorizontal: 6,
+    borderRadius: 8,
+    zIndex: 30,
   },
   awardText: {
     fontSize: 9,

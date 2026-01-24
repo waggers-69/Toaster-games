@@ -1,6 +1,5 @@
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getAnalytics } from "firebase/analytics";
+import { initializeApp, getApps, getApp } from 'firebase/app';
+import { getAnalytics, logEvent } from 'firebase/analytics'; // JS SDK, not native
 
 const firebaseConfig = {
   apiKey: "AIzaSyANQlvPCbx1eDGVNkmK9HenAh0Cw_fD4Bw",
@@ -12,20 +11,10 @@ const firebaseConfig = {
   measurementId: "G-0RM66GJ5FL"
 };
 
-const app = initializeApp(firebaseConfig);
+// Initialize Firebase
+const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 
-let analytics;
-let auth;
-if (typeof window !== "undefined") {
-  analytics = getAnalytics(app);
-  auth = getAuth(app);
+// Initialize Analytics safely for Web
+const analytics = typeof window !== 'undefined' ? getAnalytics(app) : null;
 
-  // Enable debug mode only on localhost
-  if (window.location.hostname === "localhost") {
-    localStorage.setItem("firebase:analytics_debug_mode", "true");
-    console.log("Firebase debug mode enabled for localhost");
-  }
-
-}
-
-export { app, analytics, auth };
+export { app, analytics, logEvent };

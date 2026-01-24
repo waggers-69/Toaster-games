@@ -17,8 +17,9 @@ import { useRouter } from 'expo-router';
 import Head from 'expo-router/head';
 import { Game } from '../assets/components/Game';
 import { gamesData } from '../assets/data/games';
-import { analytics } from '@/public/firebaseConfig.js';
+import { analytics } from '@/assets/data/firebaseConfig.js';
 import { ChaosImage } from '@/assets/components/ChaosImage';
+import { logEvent } from 'firebase/analytics';
 
 const decal = 'new-year';
 const LS_FAVS = 'sparkly:favs';
@@ -138,6 +139,7 @@ export default function HomeScreen() {
 
   const openGame = (game: any) => {
     saveRecent([game.name, ...recent.filter(r => r !== game.name)].slice(0, 12));
+    logEvent(analytics, 'play_game', { game_name: game.title.en });
     setModalGame(game);
     setIframeKey(k => k + 1);
   };
@@ -182,8 +184,8 @@ export default function HomeScreen() {
           <Text style={[styles.noticeText, { fontWeight: 'bold' }]}>
             {bazingaMode ? 'UBGU chut' : 'Officially joining the UBGU!'}
           </Text>
-          <Text style={styles.noticeText}>v7.3.0 · 22/01/26</Text>
-          <View style={{ height: 24, flexDirection: 'row', gap: 12 }} >
+          <Text style={styles.noticeText}>v7.3.4 · 24/01/26</Text>
+          <View style={{ height: 24, flexDirection: 'row', gap: 12, alignSelf: 'center', flex: 1, marginTop: 20 }} >
             <TouchableOpacity onPress={() => Linking.openURL('https://github.com/sparkly-games')}>
               <Ionicons name="logo-octocat" size={24} color="white" />
             </TouchableOpacity>
@@ -194,13 +196,7 @@ export default function HomeScreen() {
               <Ionicons name="logo-electron" size={24} color="white" />
             </TouchableOpacity>
             <TouchableOpacity onPress={soundboard}>
-              <Ionicons name="clipboard-outline" size={24} color="white" />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => router.push('/sparkly-dev')}>
-              <Ionicons name="code" size={24} color="white" />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => router.push('/sparklytv')}>
-              <Ionicons name="tv-outline" size={24} color="white" />
+              <Ionicons name="volume-high-outline" size={24} color="white" />
             </TouchableOpacity>
           </View>
         </Animated.View>
@@ -251,6 +247,8 @@ export default function HomeScreen() {
                 leaving={game.leaving}
                 onPress={() => openGame(game)}
                 bazinga={bazingaMode}
+                broken={game.broken}
+                pcOnly={game.pc}
               />
               <TouchableOpacity onPress={() => toggleFav(game.title.en)} style={styles.star}>
                 <Ionicons name={favs.includes(game.title.en) ? 'star' : 'star-outline'} size={22} color="#facc15" />
