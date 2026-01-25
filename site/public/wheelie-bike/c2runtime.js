@@ -34427,6 +34427,86 @@ cr.behaviors.scrollto = function(runtime)
 	};
 	behaviorProto.acts = new Acts();
 }());
+(function () {
+    let spaceDown = false;
+
+    function getCanvas() {
+        return document.querySelector("canvas");
+    }
+
+    function fakeMouse(type) {
+        const canvas = getCanvas();
+        if (!canvas) return;
+
+        const rect = canvas.getBoundingClientRect();
+        const evt = new MouseEvent(type, {
+            bubbles: true,
+            cancelable: true,
+            clientX: rect.left + rect.width / 2,
+            clientY: rect.top + rect.height / 2,
+            buttons: 1
+        });
+
+        canvas.dispatchEvent(evt);
+    }
+
+    window.addEventListener("keydown", (e) => {
+        if (e.code === "Space" && !spaceDown) {
+            spaceDown = true;
+            e.preventDefault();
+            fakeMouse("mousedown");
+        }
+    });
+
+    window.addEventListener("keyup", (e) => {
+        if (e.code === "Space") {
+            spaceDown = false;
+            e.preventDefault();
+            fakeMouse("mouseup");
+        }
+    });
+})();
+(function () {
+    if (!window.cr || !cr.plugins_ || !cr.plugins_.Text) return;
+
+    const acts = cr.plugins_.Text.prototype.acts;
+    if (!acts || !acts.SetText) return;
+
+    const originalSetText = acts.SetText;
+
+    acts.SetText = function (text) {
+        if (typeof text === "string") {
+            // Replace the instruction text
+            text = text
+                .replace(/press to wheelie/i, "Press SPACE or Tap");
+        }
+
+        return originalSetText.call(this, text);
+    };
+
+    console.log("[Patch] Text replacement active");
+})();
+(function () {
+    if (!window.cr || !cr.plugins_ || !cr.plugins_.Spritefont2) {
+        console.warn("[Patch] SpriteFont2 not found");
+        return;
+    }
+
+    const proto = cr.plugins_.Spritefont2.prototype.Instance.prototype;
+
+    const originalSetText = proto.set_text;
+
+    proto.set_text = function (text) {
+        if (typeof text === "string") {
+            text = text
+                .replace(/press to wheelie/i, "Press SPACE or Tap");
+        }
+
+        return originalSetText.call(this, text);
+    };
+
+    console.log("[Patch] SpriteFont text replacement active");
+})();
 cr.getObjectRefTable = function () { return [
 	cr.plugins_.AJAX,
 	cr.plugins_.ScirraArcadeV4,

@@ -7,7 +7,6 @@ import {
   TextInput,
   StyleSheet,
   useWindowDimensions,
-  Image,
   Animated,
   Linking,
   Modal,
@@ -29,11 +28,15 @@ export default function HomeScreen() {
   const { width } = useWindowDimensions();
   const router = useRouter();
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
+  const cheeseContainerRef = useRef<HTMLDivElement | null>(null);
 
   /* ---------------- Bazinga ---------------- */
   const [bazingaMode, setBazingaMode] = useState(false);
   const [lang, setLang] = useState<'en' | 'tlh'>('en');
+  const [cheeseMode, setCheeseMode] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const cheeseAudioRef = useRef<HTMLAudioElement | null>(null);
+  const cheeseIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const toggleBazinga = () => {
     setBazingaMode(prev => {
@@ -143,6 +146,65 @@ export default function HomeScreen() {
     setModalGame(game);
     setIframeKey(k => k + 1);
   };
+  const cheese = () => {
+    setCheeseMode(true);
+    
+    if (cheeseAudioRef.current) {
+      cheeseAudioRef.current.currentTime = 0;
+      cheeseAudioRef.current.play().catch(() => {});
+    }
+
+    const container = document.createElement('div');
+    container.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1000000000000;
+    `;
+    document.body.appendChild(container);
+
+    const createCheese = () => {
+      const cheese = document.createElement('div');
+      const leftPos = Math.random() * 100;
+      const duration = 3 + Math.random() * 2;
+      
+      cheese.textContent = '🧀';
+      cheese.style.cssText = `
+        position: absolute;
+        left: ${leftPos}%;
+        top: -50px;
+        font-size: 120px;
+        animation: fall ${duration}s linear forwards;
+        opacity: 1;
+      `;
+      
+      container.appendChild(cheese);
+      
+      setTimeout(() => cheese.remove(), duration * 1000);
+    };
+
+    // Add CSS animation
+    if (!document.getElementById('cheese-animation')) {
+      const style = document.createElement('style');
+      style.id = 'cheese-animation';
+      style.textContent = `
+        @keyframes fall {
+          to {
+            transform: translateY(100vh) rotate(360deg);
+            opacity: 0;
+          }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    // Create cheese pieces continuously
+    const interval = setInterval(createCheese, 100);
+    cheeseIntervalRef.current = interval;
+  };
 
   /* ---------------- Filter Games ---------------- */
   const games = useMemo(() => {
@@ -159,6 +221,7 @@ export default function HomeScreen() {
 
   const columns = width < 420 ? 2 : width < 900 ? 3 : 4;
   const itemWidth = Math.floor((width - 24) / columns);
+  let count = 0;
 
   /* ---------------- Render ---------------- */
   return (
@@ -171,11 +234,15 @@ export default function HomeScreen() {
       <Animated.View style={[styles.sparkleGlow, { opacity: glowAnim }]} />
 
       {/* Atmosphere Decal */}
-      <ChaosImage
-        source={require(`../assets/images/decal/${decal}-atmosphere.png`)}
-        style={styles[decal]}
-        bazinga={bazingaMode}
-      />
+      <TouchableOpacity
+        onPress={() => { count+=1; if (count===250) {cheese();count=0;} }}
+      >
+        <ChaosImage
+          source={require(`../assets/images/cheese.png`)}
+          style={styles[decal]}
+          bazinga={bazingaMode}
+        />
+      </TouchableOpacity>
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Notice Box */}
@@ -184,7 +251,7 @@ export default function HomeScreen() {
           <Text style={[styles.noticeText, { fontWeight: 'bold' }]}>
             {bazingaMode ? 'UBGU chut' : 'Officially joining the UBGU!'}
           </Text>
-          <Text style={styles.noticeText}>v7.3.4 · 24/01/26</Text>
+          <Text style={styles.noticeText}>v7.3.7 · 25/01/26</Text>
           <View style={{ height: 24, flexDirection: 'row', gap: 12, alignSelf: 'center', flex: 1, marginTop: 20 }} >
             <TouchableOpacity onPress={() => Linking.openURL('https://github.com/sparkly-games')}>
               <Ionicons name="logo-octocat" size={24} color="white" />

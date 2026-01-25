@@ -27,7 +27,7 @@ export const gamesData = [
 
   { title: { en: "Idle Football Manager", tlh: "mIllogh football ra'wI'" }, img: "k", url: "/idle-football/" },
   { title: { en: "Happy Glass", tlh: "'" }, img: "an", url: "/happyglass/" },
-  { title: { en: "NEW Tiny Fishing", tlh: "mach gheD chu'" }, img: "1", url: "https://game-hub.nyc3.cdn.digitaloceanspaces.com/tiny-fishing/index.html", broken: true },
+  { title: { en: "NEW Tiny Fishing", tlh: "mach gheD chu'" }, img: "aq", url: "https://game-hub.nyc3.cdn.digitaloceanspaces.com/tiny-fishing/index.html", broken: true },
   { title: { en: "Nut Sort", tlh: "nI' Hom ghItlh" }, img: "aj", url: "/nutsort/" },
   { title: { en: "OvO", tlh: "OvO" }, img: "7", url: "/ovo/" },
   { title: { en: "Paper.io 2", tlh: "pab Dot IO cha'" }, img: "am", url: "/paperio2/" },
@@ -80,7 +80,7 @@ export const gamesData = [
   { title: { en: "Fruit Ninja", tlh: "Nah ninja" }, img: "v", url: "/fruitninja.htm" },
   { title: { en: "GD SubZero", tlh: "GD SubZero" }, img: "j", url: "/gd-sub0.htm"},
   { title: { en: "GD World", tlh: "GD ?" }, img: "av", url: "/gdworld.htm"},
-  { title: { en: "Going Balls", tlh: "Going Balls" }, img: "ad", url: "/going-balls.htm", leaving: "4th Feb" },
+  { title: { en: "Going Balls", tlh: "Going Balls" }, img: "?", url: "/going-balls.htm", leaving: "4th Feb" },
   { title: { en: "Driven Wild", tlh: "Driven Wild" }, img: "ao", url: "/drivenwild/index.html" },
   { title: { en: "Knife Hit", tlh: "?" }, img: "o", url: "/knifehit" },
 ];
