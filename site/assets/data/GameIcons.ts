@@ -40,6 +40,7 @@ export const gameIcons = {
   "aa": require("../icons/aa.webp"),
   "ab": require("../icons/ab.jpg"),
   "ac": require("../icons/ac.jpeg"),
+  "ad": require("../icons/ad.jpg"),
   "ae": require("../icons/ae.png"),
   "af": require("../icons/af.jpg"),
   "ag": require("../icons/ag.jpg"),

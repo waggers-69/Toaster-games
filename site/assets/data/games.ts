@@ -82,5 +82,6 @@ export const gamesData = [
   { title: { en: "GD World", tlh: "GD ?" }, img: "av", url: "/gdworld.htm"},
   { title: { en: "Going Balls", tlh: "Going Balls" }, img: "?", url: "/going-balls.htm", leaving: "4th Feb" },
   { title: { en: "Driven Wild", tlh: "Driven Wild" }, img: "ao", url: "/drivenwild/index.html" },
-  { title: { en: "Knife Hit", tlh: "?" }, img: "o", url: "/knifehit" },
+  { title: { en: "Knife Hit", tlh: "?" }, img: "?", url: "/404.html" },
+  { title: { en: "Car Drawing Game", tlh: "?" }, img: "ad", url: "/car-drawing-game/" },
 ];

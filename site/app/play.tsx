@@ -45,7 +45,7 @@ export default function HomeScreen() {
       if (newMode) {
         // Turn ON Bazinga
         if (!audioRef.current) {
-          audioRef.current = new Audio('/bazinga.mp3');
+          audioRef.current = new Audio('/sounds/bazinga.mp3');
           audioRef.current.loop = true;
           audioRef.current.playbackRate = Math.random() + Math.random() * 1.25;
         }
@@ -141,7 +141,7 @@ export default function HomeScreen() {
   const toggleFav = (name: string) => saveFavs(favs.includes(name) ? favs.filter(f => f !== name) : [...favs, name]);
 
   const openGame = (game: any) => {
-    saveRecent([game.name, ...recent.filter(r => r !== game.name)].slice(0, 12));
+    saveRecent([game.title.en, ...recent.filter(r => r !== game.name)].slice(0, 12));
     logEvent(analytics, 'play_game', { game_name: game.title.en });
     setModalGame(game);
     setIframeKey(k => k + 1);
@@ -251,7 +251,7 @@ export default function HomeScreen() {
           <Text style={[styles.noticeText, { fontWeight: 'bold' }]}>
             {bazingaMode ? 'UBGU chut' : 'Officially joining the UBGU!'}
           </Text>
-          <Text style={styles.noticeText}>v7.3.7 · 25/01/26</Text>
+          <Text style={styles.noticeText}>v7.3.8 · 26/01/26</Text>
           <View style={{ height: 24, flexDirection: 'row', gap: 12, alignSelf: 'center', flex: 1, marginTop: 20 }} >
             <TouchableOpacity onPress={() => Linking.openURL('https://github.com/sparkly-games')}>
               <Ionicons name="logo-octocat" size={24} color="white" />
