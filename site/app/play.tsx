@@ -171,7 +171,7 @@ export default function HomeScreen() {
       const leftPos = Math.random() * 100;
       const duration = 3 + Math.random() * 2;
       
-      cheese.textContent = '🧀';
+      cheese.textContent = '🥖';
       cheese.style.cssText = `
         position: absolute;
         left: ${leftPos}%;
@@ -238,7 +238,7 @@ export default function HomeScreen() {
         onPress={() => { count+=1; if (count===250) {cheese();count=0;} }}
       >
         <ChaosImage
-          source={require(`../assets/images/cheese.png`)}
+          source={require(`../assets/images/favicon.png`)}
           style={styles[decal]}
           bazinga={bazingaMode}
         />
@@ -247,13 +247,13 @@ export default function HomeScreen() {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Notice Box */}
         <Animated.View style={[styles.noticeBox, { transform: [{ translateY: floatAnim }] }]}>
-          <Text style={styles.noticeTitle}>✨ Sparkly Games ✨</Text>
+          <Text style={styles.noticeTitle}>🥖 Toaster Games 🥖</Text>
           <Text style={[styles.noticeText, { fontWeight: 'bold' }]}>
-            {bazingaMode ? 'UBGU chut' : 'Officially joining the UBGU!'}
+            {bazingaMode ? 'Sparkly' : 'Subdenomination of Sparkly Games.'}
           </Text>
           <Text style={styles.noticeText}>v7.3.8 · 26/01/26</Text>
           <View style={{ height: 24, flexDirection: 'row', gap: 12, alignSelf: 'center', flex: 1, marginTop: 20 }} >
-            <TouchableOpacity onPress={() => Linking.openURL('https://github.com/sparkly-games')}>
+            <TouchableOpacity onPress={() => Linking.openURL('https://github.com/toaster-gas-games')}>
               <Ionicons name="logo-octocat" size={24} color="white" />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => router.push('/vids')}>
