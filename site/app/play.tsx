@@ -235,7 +235,7 @@ export default function HomeScreen() {
 
       {/* Atmosphere Decal */}
       <TouchableOpacity
-        onPress={() => { count+=1; if (count===250) {cheese();count=0;} }}
+        onPress={() => { count+=1; if (count===150) {cheese();count=0;} }}
       >
         <ChaosImage
           source={require(`../assets/images/favicon.png`)}
@@ -393,7 +393,7 @@ const styles = StyleSheet.create({
     top: -140,
     alignSelf: 'center',
   },
-  'new-year': { height: 175, width: 400, top: 10, alignSelf: 'center' },
+  'new-year': { height: 275, width: 300, top: 10, alignSelf: 'center' },
 
   noticeBox: {
     margin: 16,
