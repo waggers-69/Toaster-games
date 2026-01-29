@@ -35,8 +35,8 @@ export default function Home() {
   return (
     <View style={styles.root}>
       <Head>
-          <title>Sparkly Games</title>
-          <meta name="description" content="With Sparkly, get ready to game into the future. With a huge catalog of games to choose from, and even more to come, we hope you never get bored. With no ads and more games every other day, you'll never be bored!" />
+          <title>Toaster Games</title>
+          <meta name="description" content="With Toaster Games, get ready to game into the future. With a huge catalog of games to choose from, and even more to come, we hope you never get bored. With no ads and more games every other day, you'll never be bored!" />
       </Head>
       {/* Header */}
       <View style={styles.header}>
@@ -44,7 +44,7 @@ export default function Home() {
           <View style={styles.brand}>
             <Image source={{ uri: '/favicon.ico' }} style={styles.logo} />
             <Text style={[styles.brandText, styles.gradientText]}>
-              Sparkly Games
+              Toaster Games
             </Text>
           </View>
 
@@ -71,7 +71,7 @@ export default function Home() {
 
           <Text style={styles.title}>
             EMBRACE THE{'\n'}
-            <Text style={styles.gradientText}>GAMER WITHIN</Text>
+            <Text style={styles.gradientText}>TOASTER</Text>
           </Text>
 
           <Text style={styles.subtitle}>
@@ -90,9 +90,9 @@ export default function Home() {
 
             <Pressable
               style={styles.secondaryButton}
-              onPress={() => window.location.href = '/sparkly-dev'}
+              onPress={() => window.location.href = '/toaster-dev'}
             >
-              <Text style={styles.secondaryText}>sparkly.dev</Text>
+              <Text style={styles.secondaryText}>toaster.dev</Text>
             </Pressable>
           </View>
         </View>
@@ -123,11 +123,11 @@ export default function Home() {
               source={{ uri: '/favicon.ico' }}
               style={styles.footerLogo}
             />
-            <Text style={styles.footerLabel}>SPARKLY ECOSYSTEM</Text>
+            <Text style={styles.footerLabel}>TOASTER ECOSYSTEM</Text>
           </View>
 
           <Text style={styles.footerText}>
-            © 2025 Sparkly Games. Keep shining.
+            © 2025 Toaster Games. Keep shining.
           </Text>
         </View>
       </ScrollView>
